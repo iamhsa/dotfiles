@@ -1,0 +1,102 @@
+" VIM Configuration
+" Author : iamhsa
+
+" Vim-plug config
+" ======================================================
+" -- Install vim-plug
+" Install vim-plug if not found
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+  Plug 'morhetz/gruvbox'
+  Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'chrisbra/csv.vim'
+  Plug 'jvirtanen/vim-hcl'
+  Plug 'hashivim/vim-terraform'
+  Plug 'martinda/Jenkinsfile-vim-syntax'
+  Plug 'cespare/vim-toml'
+
+" Initialize plugin system
+call plug#end()
+
+" Config Section
+" ======================================================
+set nocompatible            " disable compatibility to old-time vi
+set showmatch               " show matching brackets.
+set ignorecase              " case insensitive matching
+set hlsearch                " highlight search results
+set tabstop=2               " number of columns occupied by a tab character
+set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
+set expandtab               " converts tabs to white space
+set shiftwidth=2            " width for autoindents
+set autoindent              " indent a new line the same amount as the line just typed
+set number                  " add line numbers
+set encoding=utf-8
+set t_Co=256
+set laststatus=2
+set term=xterm-256color
+set termencoding=utf-8
+set ffs=unix,mac,dos
+filetype plugin indent on   " allows auto-indenting depending on file type
+if (has("termguicolors"))
+  set termguicolors
+endif
+syntax on                   " syntax highlighting
+set background=dark
+colorscheme gruvbox
+if &diff
+  colorscheme gruvbox
+endif
+
+" Desactiver les touches directionnelles
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme='lucius'
+let g:airline#extensions#tabline#enabled = 1
+
+"let g:Powerline_symbols = 'fancy'
+
+" NerdTree Config
+" ===============================
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeMinimalUI = 1
+"let g:NERDTreeIgnore = []
+"let g:NERDTreeStatusline = ''
+autocmd BufWinEnter * NERDTreeMirror
+" Automaticaly close nvim if NERDTree is only thing left open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Toggle
+nnoremap <silent> <C-b> :NERDTreeToggle<CR>
+
+" Terraform config
+let g:terraform_align=2
+let g:terraform_fmt_on_save=1
+
+" Commands Section
+" ======================================================
+" Mapping to force wirting with sudo
+cmap w!! w !sudo tee >/dev/null %
+
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
