@@ -47,6 +47,15 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 z4h install ohmyzsh/ohmyzsh || return
 z4h install asdf-vm/asdf || return
 
+# Config for keychain omz plugin
+zstyle :omz:plugins:keychain agents ssh
+zstyle :omz:plugins:keychain options --quiet
+if [ -f "$HOME/.ssh/keys/.loadkeys" ]; then
+  zstyle :omz:plugins:keychain identities $HOME/.ssh/keys/*.pem
+else
+  zstyle :omz:plugins:keychain options --inherit any
+fi
+
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
 # is fully initialized. Everything that requires user interaction or can
@@ -64,10 +73,10 @@ z4h source ~/.env.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
 z4h source asdf-vm/asdf/asdf.sh
-z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
+z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 
 # Define key bindings.
 z4h bindkey undo Ctrl+/   Shift+Tab # undo the last command line change
