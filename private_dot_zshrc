@@ -37,7 +37,8 @@ zstyle ':z4h:ssh:*'           enable 'yes'
 
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
-zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
+#zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
+zstyle ':z4h:ssh:*' send-extra-files '~/.env.zsh' '~/.vim/vimrc'
 
 # Addionnal config for z4h teleportatio over SSH
 zstyle ':completion:*:ssh:argument-1:'       tag-order    hosts users
