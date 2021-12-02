@@ -103,7 +103,7 @@
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline
-    lpass
+    my_lpass
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
@@ -669,16 +669,16 @@
   typeset -g POWERLEVEL9K_ASDF_JAVA_FOREGROUND=32
   # typeset -g POWERLEVEL9K_ASDF_JAVA_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # typeset -g POWERLEVEL9K_ASDF_JAVA_SHOW_ON_UPGLOB='*.foo|*.bar'
-  
+
   # Terraform version from asdf.
   typeset -g POWERLEVEL9K_ASDF_TERRAFORM_FOREGROUND=70
   typeset -g POWERLEVEL9K_ASDF_TERRAFORM_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_ASDF_TERRAFORM_SHOW_ON_UPGLOB='*.tf'
-  
-  # Packer version from asdf.                                                                                                                                           
-  typeset -g POWERLEVEL9K_ASDF_PACKER_FOREGROUND=39                                                                                                                     
-  typeset -g POWERLEVEL9K_ASDF_PACKER_VISUAL_IDENTIFIER_EXPANSION=''                                                                                                   
-  typeset -g POWERLEVEL9K_ASDF_PACKER_SHOW_ON_UPGLOB='*.pkr.hcl' 
+
+  # Packer version from asdf.
+  typeset -g POWERLEVEL9K_ASDF_PACKER_FOREGROUND=39
+  typeset -g POWERLEVEL9K_ASDF_PACKER_VISUAL_IDENTIFIER_EXPANSION=''
+  typeset -g POWERLEVEL9K_ASDF_PACKER_SHOW_ON_UPGLOB='*.pkr.hcl'
 
   # Perl version from asdf.
   typeset -g POWERLEVEL9K_ASDF_PERL_FOREGROUND=67
@@ -1561,19 +1561,19 @@
   # Custom prefix.
   # typeset -g POWERLEVEL9K_TIME_PREFIX='%fat '
   #
-  ####################################[ lpass: lastpass status  ]#################################                                                                        
-  function prompt_lpass() {                                                                                                                                             
-    _p9k_cached_cmd 0 '' lpass --version || return                                                                                                                      
-    local lpass_status=$(lpass status --color=never | cut -d ' ' -f4)                                                                                                   
-    if [ $(lpass status --color=never | cut -d ' ' -f4) ]; then                                                                                                         
-      p10k segment -i '聾' -f 160                                                                                                                                       
-    else                                                                                                                                                                
-      p10k segment -i '聾' -f 250                                                                                                                                       
-    fi                                                                                                                                                                  
+  ####################################[ lpass: lastpass status  ]#################################
+  function prompt_my_lpass() {
+    _p9k_cached_cmd 0 '' lpass --version || return
+    local lpass_status=$(lpass status --color=never | cut -d ' ' -f4)
+    if [ $(lpass status --color=never | cut -d ' ' -f4) ]; then
+      p10k segment -i '聾' -f 160
+    else
+      p10k segment -i '聾' -f 250
+    fi
   }
 
-  function instant_prompt_lpass() {                                                                                                                                     
-      prompt_lpass
+  function instant_prompt_my_lpass() {
+      prompt_my_lpass
   }
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
