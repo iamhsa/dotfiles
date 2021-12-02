@@ -1,0 +1,3 @@
+{{- if (eq .chezmoi.osRelease.id "debian") -}}
+{{ (index (lastpassRaw "awscli-sso-config") 0).note }}
+{{- end -}}
