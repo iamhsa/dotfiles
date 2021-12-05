@@ -1,0 +1,3 @@
+[user]
+  name  = {{ (index (lastpass "git-config") 0).note.name  | trim }}
+  email = {{ (index (lastpass "git-config") 0).note.email | trim }}
