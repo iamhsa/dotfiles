@@ -73,7 +73,7 @@ path=(~/bin $path)
 
 # Export environment variables.
 export GPG_TTY=$TTY
-if [ -f $(command -v bat)]; then
+if [ -f $(command -v bat) ]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 
