@@ -73,9 +73,13 @@ path=(~/bin $path)
 
 # Export environment variables.
 export GPG_TTY=$TTY
+if [ -f $(command -v bat)]; then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
+
 
 # Use additional Git repositories pulled in with `z4h install`.
 z4h source asdf-vm/asdf/asdf.sh
