@@ -1,4 +1,4 @@
-{{ if (output "bash" "-c" "command -v lpass || true" | regexMatch "lpass") -}}
+{{ if .islastpasspresent -}}
 [user]
   name  = {{ (index (lastpass "git-config") 0).note.name  | trim }}
   email = {{ (index (lastpass "git-config") 0).note.email | trim }}

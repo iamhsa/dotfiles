@@ -1,0 +1,6 @@
+{{/* boolean feature tags */}}
+{{- $islastpasspresent := output "bash" "-c" "command -v lpass || true" | regexMatch "lpass" -}} {{/* true if lastpass cli is installed */}}
+{{- "" -}}
+
+[data]
+  islastpasspresent = {{ $islastpasspresent }} 
