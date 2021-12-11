@@ -31,7 +31,7 @@
   trustexitcode = false
 
 [delta]
-  #side-by-side = true
+  side-by-side = true
   commit-decoration-style = bold box ul
   dark = true
   file-decoration-style = none
