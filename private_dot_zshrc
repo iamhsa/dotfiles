@@ -10,6 +10,9 @@ zstyle ':z4h:' auto-update      'no'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
 
+# Start tmux if not already in tmux.
+zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
+
 # Move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
 
@@ -32,9 +35,9 @@ zstyle ':z4h:direnv:success' notify 'yes'
 # SSH when connecting to these hosts.
 #zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
 #zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
-zstyle ':z4h:ssh:*noname0.eu' enable 'yes'
+zstyle ':z4h:ssh:*noname0.eu'          enable 'yes'
 # The default value if none of the overrides above match the hostname.
-zstyle ':z4h:ssh:*'           enable 'no'
+zstyle ':z4h:ssh:*'                    enable 'no'
 
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
@@ -81,7 +84,6 @@ fi
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
 
-
 # Use additional Git repositories pulled in with `z4h install`.
 z4h source asdf-vm/asdf/asdf.sh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
@@ -90,13 +92,16 @@ z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 
 # Define key bindings.
-z4h bindkey undo Ctrl+/   Shift+Tab # undo the last command line change
-z4h bindkey redo Option+/           # redo the last undone command line change
+z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
+z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace
 
-z4h bindkey z4h-cd-back    Shift+Left   # cd into the previous directory
-z4h bindkey z4h-cd-forward Shift+Right  # cd into the next directory
-z4h bindkey z4h-cd-up      Shift+Up     # cd into the parent directory
-z4h bindkey z4h-cd-down    Shift+Down   # cd into a child directory
+z4h bindkey undo Ctrl+/ Shift+Tab # undo the last command line change
+z4h bindkey redo Alt+/            # redo the last undone command line change
+
+z4h bindkey z4h-cd-back    Alt+Left   # cd into the previous directory
+z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
+z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
+z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 
 # Autoload functions.
 autoload -Uz zmv
