@@ -1,0 +1,14 @@
+#!/bin/env bash
+{{- if (eq .chezmoi.osRelease.id "debian") }}
+sudo apt update -y
+sudo apt upgrade -y 
+sudo apt install -y zsh git unzip curl wget vim
+{{- else if (eq .chezmoi.osRelease.id "arch") }}
+sudo pacman -Syu --noconfirm
+sudo pacman -S --noconfirm zsh git unzip wget vim
+{{- else }}
+echo "Distribution unsupported for the moment"
+exit 1
+{{- end }}
+ 
+ 
