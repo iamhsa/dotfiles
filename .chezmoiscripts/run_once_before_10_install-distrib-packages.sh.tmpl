@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/bash
 {{- if (eq .chezmoi.osRelease.id "debian") }}
 sudo apt update -y
 sudo apt upgrade -y 
@@ -10,5 +10,3 @@ sudo pacman -S --noconfirm zsh git unzip wget vim
 echo "Distribution unsupported for the moment"
 exit 1
 {{- end }}
- 
- 
