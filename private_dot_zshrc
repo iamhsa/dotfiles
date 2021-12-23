@@ -11,10 +11,10 @@ zstyle ':z4h:' auto-update      'no'
 zstyle ':z4h:' auto-update-days '28'
 
 # Start tmux if not already in tmux.
-#zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
+zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
 
 # Enable term shell integration
-zstyle ':z4h:' term-shell-integration 'yes'
+#zstyle ':z4h:' term-shell-integration 'yes'
 
 # Move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
