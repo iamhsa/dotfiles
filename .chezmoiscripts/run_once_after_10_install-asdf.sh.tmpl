@@ -3,8 +3,6 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
 . $HOME/.asdf/asdf.sh
 mapfile -t tools < ~/.tool-versions
 for t in "${tools[@]}"; do
-  echo $t
-  echo "${t}" | cut -d ' ' -f1
   asdf plugin add $(echo "${t}" | cut -d ' ' -f1)
   asdf install ${t} 
 done
