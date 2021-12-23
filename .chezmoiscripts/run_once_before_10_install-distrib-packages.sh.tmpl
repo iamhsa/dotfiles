@@ -2,7 +2,7 @@
 {{- if (eq .chezmoi.osRelease.id "debian") }}
 sudo apt update -y
 sudo apt upgrade -y 
-sudo apt install -y zsh git unzip curl wget vim
+sudo apt install -y zsh git unzip curl wget vim python3
 {{- else if (eq .chezmoi.osRelease.id "arch") }}
 sudo pacman -Syu --noconfirm
 sudo pacman -S --noconfirm zsh git unzip wget vim
