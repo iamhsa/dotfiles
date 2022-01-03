@@ -28,6 +28,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'hashivim/vim-terraform'
   Plug 'martinda/Jenkinsfile-vim-syntax'
   Plug 'cespare/vim-toml'
+  Plug 'junegunn/limelight.vim'
+  Plug 'junegunn/goyo.vim'
 
 " Initialize plugin system
 call plug#end()
