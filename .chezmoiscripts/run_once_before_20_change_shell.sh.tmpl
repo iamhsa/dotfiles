@@ -1,5 +1,9 @@
 #!/bin/bash
 new_shell=$(cat /etc/shells | grep zsh | head -n 1)
 if [ "${new_shell}" != "$SHELL" ]; then
+{{- if (eq .chezmoi.osRelease.id "fedora") }}
+  sudo chsh -s "${new_shell}" $(whoami)
+{{- else }}
   chsh -s "${new_shell}"
+{{- end }}
 fi
