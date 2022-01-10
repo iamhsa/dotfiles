@@ -82,16 +82,21 @@ export GPG_TTY=$TTY
 if [ -f $(command -v bat) ]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
+# if docker is in rootless mode
+if [ -S "${XDG_RUNTIME_DIR}/docker.sock" ]; then
+  export DOCKER_HOST=unix://${XDG_RUNTIME_DIR}/docker.sock
+fi
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
+z4h load   ohmyzsh/ohmyzsh/plugins/asdf
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
+z4h load   ohmyzsh/ohmyzsh/plugins/gcloud
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/keychain
-z4h load   ohmyzsh/ohmyzsh/plugins/asdf
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
@@ -125,6 +130,8 @@ alias ls="${aliases[ls]:-ls} --group-directories-first"
 alias ll="${aliases[ls]:-ls} -lh"
 alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
+alias exa="exa --group-directories-first --icons -l"
+alias exal="${aliases[exa]:-l}"
 alias vi="vim"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
