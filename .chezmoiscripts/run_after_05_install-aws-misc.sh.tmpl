@@ -1,4 +1,12 @@
 #!/bin/bash
+{{- if (eq .chezmoi.osRelease.id "debian") }}
 dest="/tmp/session-manager-plugin.deb"
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o ${dest}
 sudo dpkg -i ${dest}
+{{- else if (eq .chezmoi.osRelease.id "fedora") }}
+dest="/tmp/session-manager-plugin.rpm"
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o ${dest}
+sudo dnf install -y ${dest}
+{{- end }}
+
+
