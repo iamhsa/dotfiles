@@ -1,0 +1,4 @@
+#!/bin/bash
+dest="/tmp/session-manager-plugin.deb"
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o ${dest}
+sudo dpkg -i ${dest}
