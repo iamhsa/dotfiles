@@ -82,6 +82,7 @@ path=(~/bin $path)
 
 # Export environment variables.
 export GPG_TTY=$TTY
+export FPATH=~/.local/share/zsh/site-functions:$FPATH
 if [ -f $(command -v bat) ]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
