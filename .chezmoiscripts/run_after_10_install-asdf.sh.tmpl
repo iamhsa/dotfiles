@@ -6,10 +6,11 @@ fi
 asdf update
 mapfile -t tools < ~/.tool-versions
 for t in "${tools[@]}"; do
-  if [[ "${t}" == "aws-ssm-tools "* ]]; then
-    asdf plugin add aws-ssm-tools https://github.com/amrox/asdf-pyapp.git
+  pkg="$(echo "${t}" | cut -d ' ' -f1)"
+  if [[ "${pkg}" = "aws-ssm-tools" || "${pkg}" = "yawsso" ]]; then
+    asdf plugin add ${pkg} https://github.com/amrox/asdf-pyapp.git
   else
-    asdf plugin add $(echo "${t}" | cut -d ' ' -f1)
+    asdf plugin add ${pkg}
   fi
   asdf install ${t} 
 done
