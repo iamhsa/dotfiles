@@ -99,7 +99,6 @@ z4h source ${ASDF_DIR}/asdf.sh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
-z4h load   ohmyzsh/ohmyzsh/plugins/gcloud
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 
@@ -119,10 +118,11 @@ z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 autoload -Uz zmv
 
 # Define functions and completions.
-unalias md
+unalias md # remove alias from omz/directories
+z4h source ${ASDF_DIR}/installs/gcloud/$(asdf current gcloud | awk '{print $2}')/completion.zsh.inc
+fpath=($HOME/.local/share/zsh/site-functions ${ASDF_DIR}/completions $fpath)
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 compdef _directories md
-fpath=($HOME/.local/share/zsh/site-functions ${ASDF_DIR}/completions $fpath)
 
 # Define named directories: ~w <=> Windows home directory on WSL.
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
