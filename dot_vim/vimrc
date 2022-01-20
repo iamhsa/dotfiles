@@ -36,6 +36,7 @@ call plug#end()
 
 " Config Section
 " ======================================================
+set mouse=a
 set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching brackets.
 set ignorecase              " case insensitive matching
@@ -56,12 +57,16 @@ filetype plugin indent on   " allows auto-indenting depending on file type
 if (has("termguicolors"))
   set termguicolors
 endif
-syntax on                   " syntax highlighting
 set background=dark
 colorscheme gruvbox
 if &diff
   colorscheme gruvbox
 endif
+
+" Syntax Section
+" ======================================================
+syntax on                   " syntax highlighting
+autocmd BufNewFile,BufRead *.yaml.dec set syntax=yaml
 
 " Desactiver les touches directionnelles
 "map <up> <nop>
