@@ -1560,11 +1560,11 @@
   # typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
   # typeset -g POWERLEVEL9K_TIME_PREFIX='%fat '
-  #
+
   ####################################[ lpass: lastpass status  ]#################################
   function prompt_my_lpass() {
     _p9k_cached_cmd 0 '' lpass --version || return
-    local lpass_status=$(lpass status --color=never | cut -d ' ' -f4)
+    #local lpass_status=$(lpass status --color=never | cut -d ' ' -f4)
     if [ $(lpass status --color=never | cut -d ' ' -f4) ]; then
       p10k segment -i '聾' -f 160
     else
@@ -1627,7 +1627,7 @@
   #   - verbose: Enable instant prompt and print a warning when detecting console output during
   #              zsh initialization. Choose this if you've never tried instant prompt, haven't
   #              seen the warning, or if you are unsure what this all means.
-  typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+  typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
 
   # Hot reload allows you to change POWERLEVEL9K options after Powerlevel10k has been initialized.
   # For example, you can type POWERLEVEL9K_BACKGROUND=red and see your prompt turn red. Hot reload
