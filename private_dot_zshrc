@@ -68,6 +68,7 @@ z4h install ohmyzsh/ohmyzsh || return
 
 # Config for keychain omz plugin
 zstyle :omz:plugins:keychain agents ssh
+zstyle :omz:plugins:keychain options --quiet
 if [ -f "$HOME/.ssh/keys/.loadkeys" ]; then
   zstyle :omz:plugins:keychain options --quiet
   zstyle :omz:plugins:keychain identities $HOME/.ssh/keys/*.pem
@@ -127,6 +128,7 @@ function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 function toggle-time-segment() {
  (( ${+functions[p10k]} )) || return
  p10k display '*/time'=hide,show;
+}
 
 # Deal with completions.
 [[ -n "$(command -v gcloud 2>/dev/null)" ]] && z4h source ${ASDF_DIR}/installs/gcloud/$(asdf current gcloud | awk '{print $2}')/completion.zsh.inc
