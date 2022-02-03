@@ -42,14 +42,14 @@ zstyle ':z4h:direnv:success' notify 'yes'
 #zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
 #zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
 zstyle ':z4h:ssh:*noname0.eu'          enable 'yes'
-zstyle ':z4h:ssh:*noname1*'           enable 'yes'
+zstyle ':z4h:ssh:*noname1*'            enable 'yes'
 # The default value if none of the overrides above match the hostname.
 zstyle ':z4h:ssh:*'                    enable 'no'
 
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
 #zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
-zstyle ':z4h:ssh:*' send-extra-files '~/.env.zsh' '~/.vim/vimrc'
+zstyle ':z4h:ssh:*' send-extra-files '~/.env.zsh' '~/.vim/vimrc' '~/.zsh_functions'
 
 # Addionnal config for z4h teleportatio over SSH
 zstyle ':completion:*:ssh:argument-1:'       tag-order    hosts users
@@ -99,12 +99,12 @@ fi
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
+z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
 
 # Use additional Git repositories pulled in with `z4h install`.
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
-z4h load   ohmyzsh/ohmyzsh/plugins/aws
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 
@@ -126,10 +126,7 @@ autoload -Uz zmv
 # Define functions
 unalias md # remove alias from omz/directories
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
-function toggle-time-segment() {
- (( ${+functions[p10k]} )) || return
- p10k display '*/time'=hide,show;
-}
+# ==> see also .zsh_functions
 
 # Deal with completions.
 [[ -n "$(command -v gcloud 2>/dev/null)" ]] && z4h source ${ASDF_DIR}/installs/gcloud/$(asdf current gcloud | awk '{print $2}')/completion.zsh.inc
