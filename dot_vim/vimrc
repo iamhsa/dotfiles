@@ -66,6 +66,7 @@ endif
 " ======================================================
 syntax on                   " syntax highlighting
 autocmd BufNewFile,BufRead *.yaml.dec set syntax=yaml
+autocmd BufNewFile,BufRead *.zsh.tmpl set syntax=zsh
 
 " Desactiver les touches directionnelles
 "map <up> <nop>
