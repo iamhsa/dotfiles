@@ -96,6 +96,10 @@ fi
 if [ -S "${XDG_RUNTIME_DIR}/docker.sock" ]; then
   export DOCKER_HOST=unix://${XDG_RUNTIME_DIR}/docker.sock
 fi
+# Set krew plugins path in $PATH
+if [ -d "$HOME/.krew" ]; then
+  export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
+fi
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh

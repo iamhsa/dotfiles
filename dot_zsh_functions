@@ -11,22 +11,26 @@ function asp() {
     unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_EB_PROFILE
     echo AWS profile cleared.
     return
-  fi
+  elif [[ "$1" == "logout" ]]; then
+    unset AWS_DEFAULT_PROFILE AWS_PROFILE AWS_EB_PROFILE
+    echo AWS profile cleared.
+    aws sso logout
+  else
+    local -a available_profiles
+    available_profiles=($(aws_profiles))
+    if [[ -z "${available_profiles[(r)$1]}" ]]; then
+      echo "${fg[red]}Profile '$1' not found in '${AWS_CONFIG_FILE:-$HOME/.aws/config}'" >&2
+      echo "Available profiles: ${(j:, :)available_profiles:-no profiles found}${reset_color}" >&2
+      return 1
+    fi
 
-  local -a available_profiles
-  available_profiles=($(aws_profiles))
-  if [[ -z "${available_profiles[(r)$1]}" ]]; then
-    echo "${fg[red]}Profile '$1' not found in '${AWS_CONFIG_FILE:-$HOME/.aws/config}'" >&2
-    echo "Available profiles: ${(j:, :)available_profiles:-no profiles found}${reset_color}" >&2
-    return 1
-  fi
+    export AWS_DEFAULT_PROFILE=$1
+    export AWS_PROFILE=$1
+    export AWS_EB_PROFILE=$1
 
-  export AWS_DEFAULT_PROFILE=$1
-  export AWS_PROFILE=$1
-  export AWS_EB_PROFILE=$1
-
-  if [[ "$2" == "login" ]]; then
-    aws sso login
+    if [[ "$2" == "login" ]]; then
+      aws sso login
+    fi
   fi
 }
 
@@ -40,10 +44,25 @@ function _aws_profiles() {
 }
 compctl -K _aws_profiles asp acp aws_change_access_key
 
-
 ## p10k functions
 ## ==============================================================
 function toggle-time-segment() {
- (( ${+functions[p10k]} )) || return
- p10k display '*/time'=hide,show;
+  (( ${+functions[p10k]} )) || return
+  p10k display '*/time'=hide,show;
+}
+
+## asdf functions
+## ==============================================================
+function updAsdfTools() {
+  for t in "${(@f)"$(<~/.tool-versions)"}"; do
+    pkg="$(echo "${t}" | cut -d ' ' -f1)"
+    if [[ "${t}" == *"system"* ]]; then
+      echo "${pkg} is a system package do nothing"
+    else
+      asdf global ${pkg} latest
+      #sed -i "/${t}/d" ~/.tool-versions
+      #echo "asdf uninstall ${t}"
+    fi
+  done
+  asdf install
 }
