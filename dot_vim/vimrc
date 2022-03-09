@@ -53,10 +53,13 @@ set term=xterm-256color
 set termencoding=utf-8
 set ffs=unix,mac,dos
 filetype plugin indent on   " allows auto-indenting depending on file type
-if (has("termguicolors"))
-  set termguicolors
-endif
+" if (has("termguicolors"))
+"   set termguicolors
+" endif
 set background=dark
+set notermguicolors
+highlight Search ctermfg=0
+" colorscheme default
 colorscheme gruvbox
 if &diff
   colorscheme gruvbox
