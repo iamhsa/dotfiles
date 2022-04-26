@@ -9,6 +9,9 @@ sudo pacman -S --noconfirm zsh git unzip wget vim openbsd-netcat keychain corksc
 {{- else if (eq .chezmoi.osRelease.id "fedora") }}
 sudo dnf -y upgrade
 sudo dnf install -y zsh git unzip wget vim curl util-linux-user netcat keychain corkscrew
+{{- else if (eq .chezmoi.osRelease.id "amzn") }}
+sudo yum -y upgrade
+sudo yum install -y zsh git unzip wget vim curl util-linux-user netcat keychain corkscrew
 {{- else }}
 echo "Distribution unsupported for the moment"
 exit 1
