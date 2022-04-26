@@ -59,10 +59,7 @@ function updAsdfTools() {
     if [[ "${t}" == *"system"* ]]; then
       echo "${pkg} is a system package do nothing"
     else
-      asdf global ${pkg} latest
-      #sed -i "/${t}/d" ~/.tool-versions
-      #echo "asdf uninstall ${t}"
+      asdf install ${pkg} latest && asdf global ${pkg} latest
     fi
   done
-  asdf install
 }
