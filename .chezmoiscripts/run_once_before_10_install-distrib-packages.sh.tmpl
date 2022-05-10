@@ -2,12 +2,25 @@
 {{- if (eq .chezmoi.osRelease.id "debian") }}
 sudo apt update -y
 sudo apt upgrade -y 
-sudo apt install -y zsh git unzip curl wget vim python3 python3-pip python3-venv python-is-python3 netcat keychain corkscrew bfs
+sudo apt install -y zsh git unzip curl wget vim python3 python3-pip python3-venv python-is-python3 netcat keychain corkscrew bfs lsb-release command-not-found software-properties-common lastpass-cli
+sudo apt-file update
+sudo update-command-not-found
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt update
+sudo apt install terraform
+sudo apt install packer
+{{- if (eq .chezmoi.hostname "penguin") }}
+mkdir -p ~/.ssh/keys
+touch .ssh/keys/.loadkeys
+cp /mnt/chromeos/GoogleDrive/MyDrive/Identity/ssh/keys/* ~/.ssh/keys/  
+cp /mnt/chromeos/GoogleDrive/MyDrive/Identity/ssh/config .ssh/config
+{{- end -}}
 {{- else if (eq .chezmoi.osRelease.id "arch") }}
 sudo pacman -Syu --noconfirm
 sudo pacman -S --noconfirm zsh git unzip wget vim openbsd-netcat keychain corkscrew
 {{- else if (eq .chezmoi.osRelease.id "fedora") }}
-sudo dnf -y upgrade
+sudo dnf -y 
 sudo dnf install -y zsh git unzip wget vim curl util-linux-user netcat keychain corkscrew
 {{- else if (eq .chezmoi.osRelease.id "amzn") }}
 sudo yum -y upgrade
