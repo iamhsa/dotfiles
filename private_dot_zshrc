@@ -89,6 +89,8 @@ path=(~/bin $path)
 # Export environment variables.
 export GPG_TTY=$TTY
 export ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config    
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials                                             
 if [ -f $(command -v bat) ]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
