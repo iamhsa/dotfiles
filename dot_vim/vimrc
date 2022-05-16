@@ -52,6 +52,7 @@ set laststatus=2
 set term=xterm-256color
 set termencoding=utf-8
 set ffs=unix,mac,dos
+set splitbelow
 filetype plugin indent on   " allows auto-indenting depending on file type
 " if (has("termguicolors"))
 "   set termguicolors
@@ -99,12 +100,16 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Toggle
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 
+" Terminal config
+autocmd vimenter * below terminal ++rows=6
+
 " Terraform config
+" ================================
 let g:terraform_align=2
 let g:terraform_fmt_on_save=1
 
 " Commands Section
-" ======================================================
+" ================================
 " Mapping to force wirting with sudo
 cmap w!! w !sudo tee >/dev/null %
 
