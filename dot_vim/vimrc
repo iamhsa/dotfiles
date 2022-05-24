@@ -101,11 +101,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 
 " Terminal config
-" ===============================
-"autocmd vimenter * below terminal ++rows=6
-" open terminal below all splits
-cabbrev bterm bo term ++rows=6
-
+" autocmd vimenter * below terminal ++rows=6
 
 " Terraform config
 " ================================
@@ -114,7 +110,7 @@ let g:terraform_fmt_on_save=1
 
 " Commands Section
 " ================================
-" Mapping to force wirting with sudo
+" Mapping to force writing with sudo
 cmap w!! w !sudo tee >/dev/null %
 
 "Remove all trailing whitespace by pressing F5
