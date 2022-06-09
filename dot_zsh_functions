@@ -11,7 +11,7 @@ function updAsdfTools() {
   for t in "${(@f)"$(<~/.tool-versions)"}"; do
     pkg="$(echo "${t}" | cut -d ' ' -f1)"
     if [[ "${t}" == *"system"* ]]; then
-      echo "${pkg} is a system package do nothing"
+      echo "${pkg} is set as system package (nothing to do)"
     else
       asdf install ${pkg} latest && asdf global ${pkg} latest
     fi
