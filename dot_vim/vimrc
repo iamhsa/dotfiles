@@ -17,19 +17,22 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
+  Plug 'chrisbra/csv.vim'
+  Plug 'junegunn/goyo.vim'
   Plug 'morhetz/gruvbox'
+  Plug 'martinda/Jenkinsfile-vim-syntax'
+  Plug 'junegunn/limelight.vim'
   Plug 'preservim/nerdtree' |
             \ Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'ryanoasis/vim-devicons'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'chrisbra/csv.vim'
+  Plug 'ryanoasis/vim-devicons'
   Plug 'jvirtanen/vim-hcl'
   Plug 'hashivim/vim-terraform'
-  Plug 'martinda/Jenkinsfile-vim-syntax'
   Plug 'cespare/vim-toml'
-  Plug 'junegunn/limelight.vim'
-  Plug 'junegunn/goyo.vim'
+  Plug 'Yggdroot/indentLine'
+  Plug 'pedrohdz/vim-yaml-folds'
+  Plug 'dense-analysis/ale'
 
 " Initialize plugin system
 call plug#end()
@@ -65,14 +68,24 @@ colorscheme gruvbox
 if &diff
   colorscheme gruvbox
 endif
+set foldlevelstart=20
+
+" Ale config 
+" ======================================================
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_text_changed = 'never'
 
 " Syntax Section
 " ======================================================
 syntax on                   " syntax highlighting
 autocmd BufNewFile,BufRead *.yaml.dec set syntax=yaml
+autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd BufNewFile,BufRead *.zsh.tmpl set syntax=zsh
 
 " Desactiver les touches directionnelles
+" ======================================================
 "map <up> <nop>
 "map <down> <nop>
 "map <left> <nop>
@@ -82,14 +95,15 @@ autocmd BufNewFile,BufRead *.zsh.tmpl set syntax=zsh
 "imap <left> <nop>
 "imap <right> <nop>
 
+" Airline Config
+" ======================================================
 let g:airline_powerline_fonts = 1
 let g:airline_theme='lucius'
 let g:airline#extensions#tabline#enabled = 1
 
-"let g:Powerline_symbols = 'fancy'
 
 " NerdTree Config
-" ===============================
+" ======================================================
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 "let g:NERDTreeIgnore = []
@@ -101,15 +115,16 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 
 " Terminal config
+" ======================================================
 " autocmd vimenter * below terminal ++rows=6
 
 " Terraform config
-" ================================
+" ======================================================
 let g:terraform_align=2
 let g:terraform_fmt_on_save=1
 
 " Commands Section
-" ================================
+" ======================================================
 " Mapping to force writing with sudo
 cmap w!! w !sudo tee >/dev/null %
 
