@@ -33,6 +33,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'Yggdroot/indentLine'
   Plug 'pedrohdz/vim-yaml-folds'
   Plug 'dense-analysis/ale'
+  Plug 'tpope/vim-markdown'
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " Initialize plugin system
 call plug#end()
@@ -76,6 +78,10 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_lint_on_text_changed = 'never'
+
+" Limelight config
+" =====================================================
+let g:limelight_conceal_ctermfg=244
 
 " Syntax Section
 " ======================================================
@@ -122,6 +128,12 @@ nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 " ======================================================
 let g:terraform_align=2
 let g:terraform_fmt_on_save=1
+
+" .............................................................................
+" iamcco/markdown-preview.nvim
+" .............................................................................
+let g:mkdp_auto_close=0
+let g:mkdp_refresh_slow=1
 
 " Commands Section
 " ======================================================
