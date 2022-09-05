@@ -6,12 +6,18 @@ arch=arm64
 {{- else }}
 arch=64bit
 {{- end }}
-{{- if (eq .chezmoi.osRelease.id "debian") }}
+{{ if (eq .chezmoi.os "linux") }}
+  {{- if (eq .chezmoi.osRelease.id "debian") }}
 ext=".deb"
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_${arch}/${file}${ext}" -o ${destpath}${file}${ext}
 sudo dpkg -i ${destpath}${file}${ext}
-{{- else if (eq .chezmoi.osRelease.id "fedora") }}
+  {{- else if (eq .chezmoi.osRelease.id "fedora") }}
 ext=".rpm"
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_${arch}/${file}${ext}" -o ${destpath}${file}${ext}
 sudo dnf install -y ${destpath}${file}${ext}
+  {{- end }}
+{{- else }}
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "${destpath}sessionmanager-bundle.zip"
+unzip ${destpath}sessionmanager-bundle.zip -d ${destpath}
+sudo ${destpath}sessionmanager-bundle/install -i /usr/local/sessionmanagerplugin -b /usr/local/bin/session-manager-plugin
 {{- end }}

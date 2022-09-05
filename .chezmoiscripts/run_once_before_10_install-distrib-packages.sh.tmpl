@@ -1,4 +1,5 @@
 #!/bin/bash
+{{- if (eq .chezmoi.os "linux") }}
 {{- if (eq .chezmoi.osRelease.id "debian") }}
 sudo apt update -y
 sudo apt upgrade -y
@@ -43,4 +44,7 @@ sudo yum install -y zsh git unzip wget vim curl util-linux-user netcat keychain 
 {{- else }}
 echo "Distribution unsupported for the moment"
 exit 1
+{{- end }}
+{{- else }}
+echo "OS unsupported for the moment"
 {{- end }}
