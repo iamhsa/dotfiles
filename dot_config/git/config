@@ -67,13 +67,6 @@
   unadd = reset HEAD
   fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
 
-[includeIf "gitdir:~/workspace/private/"]
-  path = ~/workspace/private/.gitconfig
-[includeIf "gitdir:~/.local/share/chezmoi/"]
-  path = ~/workspace/private/.gitconfig
-[includeIf "gitdir:~/workspace/work/"]
-  path = ~/workspace/work/.gitconfig
-
 [gpg]
   program = gpg
 
@@ -81,4 +74,13 @@
   prune = true
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
+
+[includeIf "gitdir:~/workspace/private/"]
+  path = ~/workspace/private/.gitconfig
+[includeIf "gitdir:~/.local/share/chezmoi/"]
+  path = ~/workspace/private/.gitconfig
+[includeIf "gitdir:~/workspace/work/"]
+  path = ~/workspace/work/.gitconfig
+
+
