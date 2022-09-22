@@ -149,7 +149,11 @@ alias tree='tree -a -I .git'
 alias diff='diff --color'
 
 # Add flags to existing aliases.
+{{- if (eq .chezmoi.os "darwin") }}
+alias ls="gls --group-directories-first --color=auto"
+{{- else if (eq .chezmoi.os "linux") }}
 alias ls="${aliases[ls]:-ls} --group-directories-first"
+{{- end }}
 alias ll="${aliases[ls]:-ls} -lh"
 alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
