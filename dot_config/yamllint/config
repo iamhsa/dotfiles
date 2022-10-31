@@ -4,6 +4,4 @@ extends: default
 rules:
   comments: disable
   comments-indentation: disable
-  line-length:
-    level: warning
-    allow-non-breakable-inline-mappings: true
+  line-length: disable
