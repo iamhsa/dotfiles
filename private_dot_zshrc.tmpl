@@ -60,6 +60,12 @@ zstyle ':completion:*:(ssh|scp|rdp):*:hosts' hosts
 #z4h bindkey z4h-eof Ctrl+D
 #setopt ignore_eof
 
+# Terminal title
+zstyle ':z4h:term-title:ssh'   preexec '%n@%m: ${1//\%/%%}'
+zstyle ':z4h:term-title:ssh'   precmd  '%n@%m: %~'
+zstyle ':z4h:term-title:local' preexec '${1//\%/%%}'
+zstyle ':z4h:term-title:local' precmd  '%~ %*'
+
 # Clone additional Git repositories from GitHub.
 #
 # This doesn't do anything apart from cloning the repository and keeping it
@@ -86,8 +92,13 @@ z4h init || return
 # Extend PATH.
 path=(~/bin $path)
 
+# Prompt smooth rendering
+POSTEDIT=$'\n\n\e[2A'
+
 # Export environment variables.
 export GPG_TTY=$TTY
+export EDITOR=vim
+export VISUAL=vim
 export ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config    
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials                                             
@@ -130,6 +141,10 @@ z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 
 # Autoload functions.
 autoload -Uz zmv
+autoload edit-command-line
+zle -N edit-command-line-inplace
+#bindkey -M vicmd v edit-command-line
+bindkey "^E" edit-command-line-inplace
 
 # Define functions
 unalias md # remove alias from omz/directories
@@ -145,6 +160,7 @@ compdef _directories md
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
 # Define aliases.
+alias clear=z4h-clear-screen-soft-bottom
 alias tree='tree -a -I .git'
 alias diff='diff --color'
 
