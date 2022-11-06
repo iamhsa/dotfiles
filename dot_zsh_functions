@@ -51,13 +51,15 @@ function updAsdfTools() {
 
 ## aws functions
 ## ==============================================================
-#functions assume-aws-role () {
-#  eval $(aws sts assume-role \
-#    --role-arn ${1} \
-#    --role-session-name=test \
-#    --query 'join(``, [`export `, `AWS_ACCESS_KEY_ID=`, 
-#      Credentials.AccessKeyId, ` ; export `, `AWS_SECRET_ACCESS_KEY=`,
-#      Credentials.SecretAccessKey, `; export `, `AWS_SESSION_TOKEN=`,
-#      Credentials.SessionToken])' \
-#    --output text)
-#}
+function aws-ecr-repo-empty-list () {
+  for repo in $(aws ecr describe-repositories | jq -cr '.repositories | .[].repositoryName' | sed 's/\r//g'); do
+    IMAGES=$(aws ecr list-images --repository-name ${repo} | grep imageDigest)
+    #echo $i -- $repo
+    if [[ "$?" -eq "1" ]]; then
+      echo "${repo}: empty"
+      if [[ "$1" == "-d" ]]; then
+        aws ecr delete-repository --repository-name ${repo}
+      fi
+    fi
+  done
+}
