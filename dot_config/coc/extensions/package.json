@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "coc-sh": ">=0.7.0",
+    "coc-html": ">=1.8.0",
+    "coc-json": ">=1.7.0",
+    "coc-markdownlint": ">=1.26.0",
+    "coc-pyright": ">=1.1.275"
+  }
+}
