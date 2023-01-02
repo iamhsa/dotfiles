@@ -118,6 +118,7 @@ fi
 z4h source ~/.env.zsh
 z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
+[[ "$(uname -s)" == "Darwin" ]] && z4h source ${HOME}/.iterm2_shell_integration.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
@@ -165,11 +166,12 @@ alias tree='tree -a -I .git'
 alias diff='diff --color'
 
 # Add flags to existing aliases.
-{{- if (eq .chezmoi.os "darwin") }}
-alias ls="gls --group-directories-first --color=auto"
-{{- else if (eq .chezmoi.os "linux") }}
-alias ls="${aliases[ls]:-ls} --group-directories-first"
-{{- end }}
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  alias rm="grm"
+  alias ls="gls --group-directories-first --color=auto"
+else
+  alias ls="ls --group-directories-first --color=auto"
+fi
 alias ll="${aliases[ls]:-ls} -lh"
 alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
