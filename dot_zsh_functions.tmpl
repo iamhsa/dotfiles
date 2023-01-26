@@ -11,13 +11,13 @@ function edit-command-line-inplace() {
   fi
   () {
     emulate -L zsh -o nomultibyte
-    local editor=("${(@Q)${(z)${VISUAL:-${EDITOR:-vi}}}}") 
+    local editor=("${(@Q)${(z)${VISUAL:-${EDITOR:-vi}}}}")
     case $editor in
       (*vim*)
         "${(@)editor}" -c "normal! $(($#LBUFFER + 1))go" -- $1
       ;;
       (*emacs*)
-        local lines=("${(@f)LBUFFER}") 
+        local lines=("${(@f)LBUFFER}")
         "${(@)editor}" +${#lines}:$((${#lines[-1]} + 1)) $1
       ;;
       (*)
@@ -29,12 +29,45 @@ function edit-command-line-inplace() {
   } =(<<<"$BUFFER") </dev/tty
 }
 
+## enterprise proxy functions
+## ==============================================================
+function add-proxy(){
+  export  SHELLPROXY_URL="{{ (index (lastpassRaw "proxy value") 0).note }}"
+}
+
+
 ## p10k functions
 ## ==============================================================
 function toggle-time-segment() {
   (( ${+functions[p10k]} )) || return
   p10k display '*/time'=hide,show;
 }
+
+function toggle-wifi-segment() {
+  (( ${+functions[p10k]} )) || return
+  p10k display '*/wifi'=hide,show;
+}
+
+function toggle-lastpass-segment() {
+  (( ${+functions[p10k]} )) || return
+  p10k display '*/my_lpass'=hide,show;
+}
+
+function toggle-transient-prompt() {
+  if [[ $POWERLEVEL9K_TRANSIENT_PROMPT != off ]]; then
+    POWERLEVEL9K_TRANSIENT_PROMPT=off
+  else
+    POWERLEVEL9K_TRANSIENT_PROMPT=always
+  fi
+  p10k reload
+}
+
+zle -N toggle-lastpass-segment
+bindkey '^P' toggle-lastpass-segment
+zle -N toggle-time-segment
+bindkey '^T' toggle-time-segment
+zle -N toggle-wifi-segment
+bindkey '^W' toggle-wifi-segment
 
 ## asdf functions
 ## ==============================================================
