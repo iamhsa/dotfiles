@@ -1,6 +1,6 @@
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
-# variables such as PATH) in this file or in files source by it.
+# variables such as PATH) in this file or in files sourced from it.
 #
 # Documentation: https://github.com/romkatv/zsh4humans/blob/v5/README.md.
 
@@ -20,7 +20,11 @@ zstyle ':z4h:' term-shell-integration 'yes'
 zstyle ':z4h:' prompt-at-bottom 'yes'
 
 # Keyboard type: 'mac' or 'pc'.
+{{- if eq .chezmoi.os "darwin" }}
+zstyle ':z4h:bindkey' keyboard  'mac'
+{{- else }}
 zstyle ':z4h:bindkey' keyboard  'pc'
+{{ end }}
 
 # Mark up shell's output with semantic information.
 zstyle ':z4h:' term-shell-integration 'yes'
@@ -74,14 +78,14 @@ zstyle ':z4h:term-title:local' precmd  '%~ %*'
 z4h install ohmyzsh/ohmyzsh || return
 
 # Config for keychain omz plugin
-zstyle :omz:plugins:keychain agents ssh
-zstyle :omz:plugins:keychain options --quiet
-if [ -f "$HOME/.ssh/keys/.loadkeys" ]; then
-  zstyle :omz:plugins:keychain options --quiet
-  zstyle :omz:plugins:keychain identities $HOME/.ssh/keys/*.pem
-else
-  zstyle :omz:plugins:keychain options --inherit any --quiet
-fi
+#zstyle :omz:plugins:keychain agents ssh
+#zstyle :omz:plugins:keychain options --quiet
+#if [ -f "$HOME/.ssh/keys/.loadkeys" ]; then
+#  zstyle :omz:plugins:keychain options --quiet
+#  zstyle :omz:plugins:keychain identities $HOME/.ssh/keys/*.pem
+#else
+#  zstyle :omz:plugins:keychain options --inherit any --quiet
+#fi
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -93,6 +97,7 @@ z4h init || return
 path=(~/bin $path)
 
 # Prompt smooth rendering
+# See https://github.com/romkatv/zsh4humans/blob/master/tips.md#prompt
 POSTEDIT=$'\n\n\e[2A'
 
 # Export environment variables.
@@ -125,7 +130,7 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
-z4h load   ohmyzsh/ohmyzsh/plugins/keychain
+#z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
 
 # Define key bindings.
