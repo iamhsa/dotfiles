@@ -29,12 +29,13 @@ function edit-command-line-inplace() {
   } =(<<<"$BUFFER") </dev/tty
 }
 
+{{- if .islastpasspresent }}
 ## enterprise proxy functions
 ## ==============================================================
 function add-proxy(){
   export  SHELLPROXY_URL="{{ (index (lastpassRaw "proxy value") 0).note }}"
 }
-
+{{- end }}
 
 ## p10k functions
 ## ==============================================================
