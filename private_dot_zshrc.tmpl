@@ -118,11 +118,14 @@ fi
 if [ -d "$HOME/.krew" ]; then
   export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
 fi
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/workspace
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
 z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
+z4h source /opt/homebrew/bin/virtualenvwrapper.sh
 [[ "$(uname -s)" == "Darwin" ]] && z4h source ${HOME}/.iterm2_shell_integration.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
@@ -170,9 +173,9 @@ alias diff='diff --color'
 # Add flags to existing aliases.
 if [[ "$(uname -s)" == "Darwin" ]]; then
   alias rm="grm"
-  alias ls="gls --group-directories-first --color=auto"
+  alias ls="gls --group-directories-first --color=auto --literal"
 else
-  alias ls="ls --group-directories-first --color=auto"
+  alias ls="ls --group-directories-first --color=auto --literal"
 fi
 alias ll="${aliases[ls]:-ls} -lh"
 alias la="${aliases[ll]:-ls} -A"
