@@ -39,6 +39,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'airblade/vim-gitgutter'
   Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
   Plug 'yaegassy/coc-ansible', {'do': 'yarn install --frozen-lockfile'}
+  Plug 'rust-lang/rust.vim'
 
 " Initialize plugin system
 call plug#end()
