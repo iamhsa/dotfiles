@@ -38,6 +38,7 @@
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
+    my_chezmoi              # chezmoi subshell prompt
     prompt_char             # prompt symbol
   )
 
@@ -61,7 +62,7 @@
     nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
     # node_version          # node.js version
     # go_version            # go version (https://golang.org)
-    # rust_version          # rustc version (https://www.rust-lang.org)
+    rust_version            # rustc version (https://www.rust-lang.org)
     # dotnet_version        # .NET version (https://dotnet.microsoft.com)
     # php_version           # php version (https://www.php.net/)
     # laravel_version       # laravel php framework version (https://laravel.com/)
@@ -602,9 +603,7 @@
   # Note: If this parameter is set to true, it won't hide tools.
   # Tip:  Override this parameter for ${TOOL} with POWERLEVEL9K_ASDF_${TOOL}_PROMPT_ALWAYS_SHOW.
   typeset -g POWERLEVEL9K_ASDF_PROMPT_ALWAYS_SHOW=false
-  typeset -g POWERLEVEL9K_ASDF_RUST_PROMPT_ALWAYS_SHOW=true
   typeset -g POWERLEVEL9K_ASDF_TERRAFORM_PROMPT_ALWAYS_SHOW=true
-  typeset -g POWERLEVEL9K_ASDF_PACKER_PROMPT_ALWAYS_SHOW=true
 
   # If set to false, hide tool versions that are equal to "system".
   #
@@ -672,7 +671,7 @@
 
   # Terraform version from asdf.
   typeset -g POWERLEVEL9K_ASDF_TERRAFORM_FOREGROUND=70
-  typeset -g POWERLEVEL9K_ASDF_TERRAFORM_VISUAL_IDENTIFIER_EXPANSION=''
+  typeset -g POWERLEVEL9K_ASDF_TERRAFORM_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_ASDF_TERRAFORM_SHOW_ON_UPGLOB='*.tf'
 
   # Packer version from asdf.
@@ -1576,6 +1575,15 @@
   function instant_prompt_my_lpass() {
       prompt_my_lpass
   }
+
+  ####################################[ chezmoi : chezmoi subshell  ]#################################
+  # from https://github.com/twpayne/chezmoi/issues/2800
+  function prompt_my_chezmoi() {
+    if [ ! -z "${CHEZMOI}" ]; then
+      p10k segment -i '󱗐' -t "chezmoi" -f 8
+    fi
+  }
+
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or
