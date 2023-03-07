@@ -102,8 +102,8 @@ POSTEDIT=$'\n\n\e[2A'
 
 # Export environment variables.
 export GPG_TTY=$TTY
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
@@ -126,6 +126,7 @@ z4h source ~/.env.zsh
 z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
 z4h source /opt/homebrew/bin/virtualenvwrapper.sh
+z4h source ${HOME}/.cargo/env
 [[ "$(uname -s)" == "Darwin" ]] && z4h source ${HOME}/.iterm2_shell_integration.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
@@ -161,7 +162,8 @@ function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 # ==> see also .zsh_functions
 
 # Deal with completions.
-[[ -n "$(command -v gcloud 2>/dev/null)" ]] && z4h source ${ASDF_DIR}/installs/gcloud/$(asdf current gcloud | awk '{print $2}')/completion.zsh.inc
+#[[ -n "$(command -v gcloud 2>/dev/null)" ]] && z4h source ${ASDF_DIR}/installs/gcloud/$(asdf current gcloud | awk '{print $2}')/completion.zsh.inc
+[[ -n "$(command -v gcloud 2>/dev/null)" && "$(uname -s)" == "Darwin" ]] && z4h source /opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
 fpath=($HOME/.local/share/zsh/site-functions ${ASDF_DIR}/completions $fpath)
 compdef _directories md
 
@@ -182,7 +184,7 @@ alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
 alias exa="exa --group-directories-first --icons"
 alias exal="${aliases[exa]:-l}"
-alias vi="vim"
+alias vi="nvim"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
