@@ -5,3 +5,4 @@ rules:
   comments: disable
   comments-indentation: disable
   line-length: disable
+  indentation: {spaces: 2, indent-sequences: whatever}
