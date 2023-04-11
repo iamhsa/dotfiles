@@ -94,7 +94,7 @@ z4h install ohmyzsh/ohmyzsh || return
 z4h init || return
 
 # Extend PATH.
-path=(~/bin $path)
+path=(~/.local/bin ${KREW_ROOT:-$HOME/.krew}/bin $path)
 
 # Prompt smooth rendering
 # See https://github.com/romkatv/zsh4humans/blob/master/tips.md#prompt
@@ -110,14 +110,8 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 if [ -f $(command -v bat) ]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
-# if docker is in rootless mode
-if [ -S "${XDG_RUNTIME_DIR}/docker.sock" ]; then
-  export DOCKER_HOST=unix://${XDG_RUNTIME_DIR}/docker.sock
-fi
-# Set krew plugins path in $PATH
-if [ -d "$HOME/.krew" ]; then
-  export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
-fi
+export PATH="/Users/hugosalesses/.rd/bin:$PATH"
+
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 
@@ -127,7 +121,7 @@ z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
 z4h source /opt/homebrew/bin/virtualenvwrapper.sh
 z4h source ${HOME}/.cargo/env
-[[ "$(uname -s)" == "Darwin" ]] && z4h source ${HOME}/.iterm2_shell_integration.zsh
+#[[ "$(uname -s)" == "Darwin" ]] && z4h source ${HOME}/.iterm2_shell_integration.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
@@ -152,9 +146,11 @@ z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 # Autoload functions.
 autoload -Uz zmv
 autoload edit-command-line
+
+#bindkey -v
 zle -N edit-command-line-inplace
 #bindkey -M vicmd v edit-command-line
-bindkey "^E" edit-command-line-inplace
+#bindkey "^E" edit-command-line-inplace
 
 # Define functions
 unalias md # remove alias from omz/directories

@@ -68,15 +68,15 @@ bindkey '^P' toggle-lastpass-segment
 zle -N toggle-time-segment
 bindkey '^T' toggle-time-segment
 zle -N toggle-wifi-segment
-bindkey '^W' toggle-wifi-segment
+bindkey '^N' toggle-wifi-segment
 
 ## asdf functions
 ## ==============================================================
 function updAsdfTools() {
   for t in "${(@f)"$(<~/.tool-versions)"}"; do
     pkg="$(echo "${t}" | cut -d ' ' -f1)"
-    if [[ "${t}" == *"system"* ]]; then
-      echo "${pkg} is set as system package (nothing to do)"
+    if [[ "${t}" == *"system"* || ${pkg} == "kubectl" ]]; then
+      echo "${pkg} is set as system package or pinned (nothing to do)"
     else
       asdf install ${pkg} latest && asdf global ${pkg} latest
     fi
