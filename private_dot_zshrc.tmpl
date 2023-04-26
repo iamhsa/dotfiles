@@ -45,15 +45,15 @@ zstyle ':z4h:direnv:success' notify 'yes'
 # SSH when connecting to these hosts.
 #zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
 #zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
-zstyle ':z4h:ssh:*noname0.eu'          enable 'yes'
-zstyle ':z4h:ssh:*noname1*'            enable 'yes'
+zstyle ':z4h:ssh:*noname0*'       enable 'yes'
+zstyle ':z4h:ssh:*noname1*'       enable 'yes'
 # The default value if none of the overrides above match the hostname.
-zstyle ':z4h:ssh:*'                    enable 'no'
+zstyle ':z4h:ssh:*'               enable 'no'
 
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
 #zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
-zstyle ':z4h:ssh:*' send-extra-files '~/.env.zsh' '~/.vim/vimrc' '~/.zsh_functions'
+zstyle ':z4h:ssh:*' send-extra-files '~/.vim/vimrc' '~/.zsh_functions'
 
 # Addionnal config for z4h teleportatio over SSH
 zstyle ':completion:*:ssh:argument-1:'       tag-order    hosts users
@@ -110,26 +110,22 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 if [ -f $(command -v bat) ]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
-export PATH="/Users/hugosalesses/.rd/bin:$PATH"
-
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 
 # Source additional local files if they exist.
-z4h source ~/.env.zsh
 z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
-z4h source /opt/homebrew/bin/virtualenvwrapper.sh
+z4h source ${HOMEBREW_PREFIX}/bin/virtualenvwrapper.sh
 z4h source ${HOME}/.cargo/env
-#[[ "$(uname -s)" == "Darwin" ]] && z4h source ${HOME}/.iterm2_shell_integration.zsh
-
-# Use additional Git repositories pulled in with `z4h install`.
+z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
-#z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
+
+# Use additional Git repositories pulled in with `z4h install`.
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
@@ -158,8 +154,6 @@ function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 # ==> see also .zsh_functions
 
 # Deal with completions.
-#[[ -n "$(command -v gcloud 2>/dev/null)" ]] && z4h source ${ASDF_DIR}/installs/gcloud/$(asdf current gcloud | awk '{print $2}')/completion.zsh.inc
-[[ -n "$(command -v gcloud 2>/dev/null)" && "$(uname -s)" == "Darwin" ]] && z4h source /opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
 fpath=($HOME/.local/share/zsh/site-functions ${ASDF_DIR}/completions $fpath)
 compdef _directories md
 
