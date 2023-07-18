@@ -94,7 +94,7 @@ z4h install ohmyzsh/ohmyzsh || return
 z4h init || return
 
 # Extend PATH.
-path=(~/.local/bin ${KREW_ROOT:-$HOME/.krew}/bin $path)
+path=(~/.local/bin ${KREW_ROOT:-$HOME/.krew}/bin $HOME/.rd/bin $path ${HOME}/.pkenv/bin ${HOMEBREW_PREFIX}/openssl@3/bin)
 
 # Prompt smooth rendering
 # See https://github.com/romkatv/zsh4humans/blob/master/tips.md#prompt
@@ -102,8 +102,8 @@ POSTEDIT=$'\n\n\e[2A'
 
 # Export environment variables.
 export GPG_TTY=$TTY
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 export ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
@@ -154,8 +154,8 @@ function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 # ==> see also .zsh_functions
 
 # Deal with completions.
-fpath=($HOME/.local/share/zsh/site-functions ${ASDF_DIR}/completions $fpath)
 compdef _directories md
+fpath=($HOME/.local/share/zsh/site-functions ${ASDF_DIR}/completions $fpath)
 
 # Define aliases.
 alias clear=z4h-clear-screen-soft-bottom
@@ -174,7 +174,7 @@ alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
 alias exa="exa --group-directories-first --icons"
 alias exal="${aliases[exa]:-l}"
-alias vi="nvim"
+#alias vi="nvim"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot

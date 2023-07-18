@@ -39,6 +39,11 @@ function add-proxy(){
 
 ## p10k functions
 ## ==============================================================
+function toggle-kubecontext-segment() {
+  (( ${+functions[p10k]} )) || return
+  p10k display '*/kubecontext'=hide,show;
+}
+
 function toggle-time-segment() {
   (( ${+functions[p10k]} )) || return
   p10k display '*/time'=hide,show;
@@ -69,6 +74,15 @@ zle -N toggle-time-segment
 bindkey '^T' toggle-time-segment
 zle -N toggle-wifi-segment
 bindkey '^N' toggle-wifi-segment
+zle -N toggle-kubecontext-segment
+bindkey '^K' toggle-kubecontext-segment
+
+## Node functions
+## ==============================================================
+function configureNvm(){
+  export NVM_DIR="$HOME/.nvm"
+  . "/opt/homebrew/opt/nvm/nvm.sh"
+}
 
 ## asdf functions
 ## ==============================================================
