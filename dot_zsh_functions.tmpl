@@ -41,7 +41,7 @@ function add-proxy(){
 ## ==============================================================
 function toggle-kubecontext-segment() {
   (( ${+functions[p10k]} )) || return
-  p10k display '*/kubecontext'=hide,show;
+  p10k display '*/kubecontext'=show,hide;
 }
 
 function toggle-time-segment() {
@@ -110,4 +110,18 @@ function aws-ecr-repo-empty-list () {
       fi
     fi
   done
+}
+
+## brew functions
+## ==============================================================
+function brew_find_pkg {
+    file_to_search="$@"
+
+    for package in $(brew list); do
+        brew ls $package | grep -E -q "/${file_to_search}$"
+        if [ $? -eq 0 ]; then
+            echo $package
+            break
+        fi
+    done
 }
