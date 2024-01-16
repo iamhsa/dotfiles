@@ -10,21 +10,21 @@ zstyle ':z4h:' auto-update      'no'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
 
-# Start tmux if not already in tmux.
-#zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
-
-# Enable term shell integration
-zstyle ':z4h:' term-shell-integration 'yes'
-
-# Move prompt to the bottom when zsh starts and on Ctrl+L.
-zstyle ':z4h:' prompt-at-bottom 'yes'
-
 # Keyboard type: 'mac' or 'pc'.
 {{- if eq .chezmoi.os "darwin" }}
 zstyle ':z4h:bindkey' keyboard  'mac'
 {{- else }}
 zstyle ':z4h:bindkey' keyboard  'pc'
 {{ end }}
+
+# Start tmux if not already in tmux.
+zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
+
+# Enable term shell integration
+zstyle ':z4h:' term-shell-integration 'yes'
+
+# Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
+zstyle ':z4h:' prompt-at-bottom 'yes'
 
 # Mark up shell's output with semantic information.
 zstyle ':z4h:' term-shell-integration 'yes'
@@ -77,15 +77,17 @@ zstyle ':z4h:term-title:local' precmd  '%~ %*'
 # example. If you don't plan to use Oh My Zsh, delete this line.
 z4h install ohmyzsh/ohmyzsh || return
 
+{{- if eq .chezmoi.osRelease.id "debian" }}
 # Config for keychain omz plugin
-#zstyle :omz:plugins:keychain agents ssh
-#zstyle :omz:plugins:keychain options --quiet
-#if [ -f "$HOME/.ssh/keys/.loadkeys" ]; then
-#  zstyle :omz:plugins:keychain options --quiet
-#  zstyle :omz:plugins:keychain identities $HOME/.ssh/keys/*.pem
-#else
-#  zstyle :omz:plugins:keychain options --inherit any --quiet
-#fi
+zstyle :omz:plugins:keychain agents ssh
+zstyle :omz:plugins:keychain options --quiet
+if [ -f "$HOME/.ssh/keys/.loadkeys" ]; then
+  zstyle :omz:plugins:keychain options --quiet
+  zstyle :omz:plugins:keychain identities $HOME/.ssh/keys/*.pem
+else
+  zstyle :omz:plugins:keychain options --inherit any --quiet
+fi
+{{ end }}
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -107,11 +109,13 @@ export VISUAL=vim
 export ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
-if [ -f $(command -v bat) ]; then
-  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-fi
+#if [ -f $(command -v bat) ]; then
+#  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+#fi
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 
 # Source additional local files if they exist.
 z4h source ~/.zsh_functions
@@ -122,17 +126,16 @@ z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
+z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
-
-# Use additional Git repositories pulled in with `z4h install`.
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
 z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace
 
-z4h bindkey undo Ctrl+/ Shift+Tab # undo the last command line change
-z4h bindkey redo Alt+/            # redo the last undone command line change
+z4h bindkey undo Ctrl+/ Shift+Tab  # undo the last command line change
+z4h bindkey redo Alt+/             # redo the last undone command line change
 
 z4h bindkey z4h-cd-back    Alt+Left   # cd into the previous directory
 z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
@@ -151,7 +154,7 @@ zle -N edit-command-line-inplace
 # Define functions
 unalias md # remove alias from omz/directories
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
-# ==> see also .zsh_functions
+# ==> see also .zsh_function
 
 # Deal with completions.
 compdef _directories md
