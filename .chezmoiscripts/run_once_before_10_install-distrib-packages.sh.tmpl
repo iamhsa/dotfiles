@@ -1,33 +1,25 @@
 #!/bin/bash
 {{- if (eq .chezmoi.os "linux") }}
 {{- if (eq .chezmoi.osRelease.id "debian") }}
+sudo bash -c "cat <<EOF > /etc/apt/sources.list.d/unstable.list
+deb http://deb.debian.org/debian unstable main contrib non-free
+deb-src http://deb.debian.org/debian unstable main contrib non-free
+EOF"
 sudo apt update -y
 sudo apt upgrade -y
-{{- if (eq .chezmoi.hostname "lima-debian") }}
-sudo apt install -y zsh git unzip curl wget vim python3 python3-pip python3-venv python-is-python3 netcat keychain corkscrew bfs command-not-found software-properties-common lastpass-cli ca-certificates curl gnupg lsb-release rsync lsof tmux jq
-{{- else }}
-cat << EOF > /etc/apt/sources.list.d/docker.list
-deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable
-EOF
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin libsecret-1-0 gnome-keyring firefox-esr
-wget https://github.com/docker/docker-credential-helpers/releases/download/v0.6.4/docker-credential-secretservice-v0.6.4-amd64.tar.gz
-tar -xf docker-credential-secretservice-v0.6.4-amd64.tar.gz
-mv docker-credential-secretservice ~/.local/bin/
+sudo apt install -y zsh git unzip curl wget vim file python3 python3-pip python3-venv python-is-python3 netcat-traditional keychain corkscrew bfs command-not-found lastpass-cli ca-certificates curl gnupg2i nodejs lsb-release rsync lsof tmux jq git-delta groff command-not-found col bat bsdextrautils
+sudo apt install -y docker.io libsecret-1-0
+wget https://github.com/docker/docker-credential-helpers/releases/download/v0.8.1/docker-credential-pass-v0.8.1.darwin-amd64
+mkdir -p ~/.local/bin ~/.docker/
+mv docker-credential-pass-v0.8.1.darwin-amd64  ~/.local/bin/docker-credential-secretservice
 cat << EOF > ~/.docker/config.json 
 {
   "credsStore": "secretservice"
 }
-sudo usermod -aG docker $(whoami)
 EOF
-{{- end }}
+sudo usermod -aG docker $(whoami)
 sudo apt-file update
 sudo update-command-not-found
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo apt update
-sudo apt install -y packer terraform 
 mkdir -p ~/.ssh/keys
 chmod 700 ~/.ssh
 {{- if (eq .chezmoi.hostname "penguin") }}
