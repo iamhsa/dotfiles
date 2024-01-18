@@ -1,6 +1,7 @@
 aws-ssm-tools 1.6.0
 hyfetch 1.4.10
 kubectl 1.24.17
+krew 0.4.4
 terraform 1.6.1
 wtfutil 0.43.0
 yawsso 1.1.0
@@ -8,9 +9,10 @@ lazydocker 0.23.1
 dockle 0.4.13
 trivy 0.46.0
 packer system
+{{- if eq .chezmoi.os "linux" }}
 helm 3.13.3
-krew 0.4.4
 kubectx 0.9.5
 awscli 2.15.9
 k9s 0.31.4
 sops 3.8.1
+{{ end }}
