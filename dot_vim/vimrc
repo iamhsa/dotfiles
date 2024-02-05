@@ -95,7 +95,7 @@ let g:limelight_conceal_ctermfg=244
 " ======================================================
 syntax on                   " syntax highlighting
 autocmd BufNewFile,BufRead *.yaml.dec set syntax=yaml
-autocmd FileType yaml,yml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType yaml,yml setlocal ts=4 sts=4 sw=4 expandtab
 autocmd BufNewFile,BufRead *.zsh.tmpl set syntax=zsh
 
 " Desactiver les touches directionnelles
