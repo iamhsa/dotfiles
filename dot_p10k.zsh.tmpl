@@ -38,7 +38,7 @@
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
-    my_chezmoi              # chezmoi subshell prompt
+    chezmoi_shell           # chezmoi shell
     prompt_char             # prompt symbol
   )
 
@@ -777,9 +777,9 @@
 
   ##################[ chezmoi_shell: chezmoi shell (https://www.chezmoi.io/) ]##################
   # chezmoi shell color.
-  typeset -g POWERLEVEL9K_CHEZMOI_SHELL_FOREGROUND=33
+  typeset -g POWERLEVEL9K_CHEZMOI_SHELL_FOREGROUND=8
   # Custom icon.
-  # typeset -g POWERLEVEL9K_CHEZMOI_SHELL_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_CHEZMOI_SHELL_VISUAL_IDENTIFIER_EXPANSION='[󱗐 chezmoi]'
 
 
   ##################################[ disk_usage: disk usage ]##################################
@@ -1620,15 +1620,6 @@
   function instant_prompt_my_lpass() {
       prompt_my_lpass
   }
-
-  ####################################[ chezmoi : chezmoi subshell  ]#################################
-  # from https://github.com/twpayne/chezmoi/issues/2800
-  function prompt_my_chezmoi() {
-    if [ ! -z "${CHEZMOI}" ]; then
-      p10k segment -i '󱗐' -t "chezmoi" -f 8
-    fi
-  }
-
 
   # Example of a user-defined prompt segment. Function prompt_example will be called on every
   # prompt if `example` prompt segment is added to POWERLEVEL9K_LEFT_PROMPT_ELEMENTS or
