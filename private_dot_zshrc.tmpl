@@ -72,12 +72,16 @@ zstyle ':z4h:term-title:ssh'   precmd  '%n@%m: %~'
 zstyle ':z4h:term-title:local' preexec '${1//\%/%%}'
 zstyle ':z4h:term-title:local' precmd  '%~ %*'
 
+# Inactive zsh-syntax-highlighting
+zstyle ':z4h:zsh-syntax-highlighting' channel 'none'
+
+
 # Clone additional Git repositories from GitHub.
 #
 # This doesn't do anything apart from cloning the repository and keeping it
-# up-to-date. Cloned files can be used after `z4h init`. This is just an
-# example. If you don't plan to use Oh My Zsh, delete this line.
-z4h install ohmyzsh/ohmyzsh || return
+# up-to-date. Cloned files can be used after `z4h init`.
+z4h install ohmyzsh/ohmyzsh || return                            # Install ohmyzsh
+z4h install zdharma-continuum/fast-syntax-highlighting || return # Install fast-syntax-highlighting
 
 {{- if eq .chezmoi.os "linux" }}
 # Config for keychain omz plugin
@@ -132,6 +136,7 @@ z4h load   ohmyzsh/ohmyzsh/plugins/keychain
 {{ end }}
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
+z4h load   zdharma-continuum/fast-syntax-highlighting
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
