@@ -110,8 +110,8 @@ POSTEDIT=$'\n\n\e[2A'
 
 # Export environment variables.
 export GPG_TTY=$TTY
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
@@ -122,6 +122,9 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+{{- if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch")) }}
+export BROWSER="echo"
+{{- end }}
 
 # Source additional local files if they exist.
 z4h source ~/.zsh_functions
@@ -178,14 +181,13 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias rm="grm"
   alias ls="gls --group-directories-first --color=auto --literal"
 else
-  alias ls="ls --group-directories-first --color=auto --literal"
+  #alias ls="ls --group-directories-first --color=auto --literal"
+  alias ls="eza --group-directories-first --icons"
 fi
 alias ll="${aliases[ls]:-ls} -lh"
 alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
-alias eza="eza --group-directories-first --icons"
-alias ezal="${aliases[eza]:-l}"
-#alias vi="nvim"
+alias vi="nvim"
 
 #export PYENV_ROOT="$HOME/.pyenv"
 if (command -v pyenv >/dev/null); then
