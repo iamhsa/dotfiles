@@ -15,18 +15,3 @@ while IFS= read -r line; do
   fi
   asdf install ${pkg} ${ver}
 done < ~/.tool-versions
-
-
-#for t in "$(cat ~/.tool-versions | awk '{print $1 " " $2}')"; do
-#  pkg="$(echo "${t}" | cut -d ' ' -f1)"
-#  ver="$(echo "${t}" | cut -d ' ' -f2)"
-#  echo "$pkg -- $ver"
-#  #if [[ "${pkg}" = "aws-ssm-tools" || "${pkg}" = "yawsso" || "$pkg" = "tmuxp" ]]; then
-#  #  #asdf plugin add ${pkg} https://github.com/amrox/asdf-pyapp.git
-#  #  echo "do nothing for $pkg"
-#  #else
-#  #  echo "install plugin $pkg"
-#  #  asdf plugin add ${pkg}
-#  #fi
-#  #asdf install ${t} 
-#done
