@@ -190,7 +190,7 @@
   # OS identifier color.
   typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=
   # Custom icon.
-  {{- if (eq .chezmoi.osRelease.id "arch") }}
+  {{- if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch")) }}
   typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='󰣇'
   {{- else -}}
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
