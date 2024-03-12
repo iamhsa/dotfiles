@@ -17,10 +17,10 @@ zstyle ':z4h:bindkey' keyboard  'mac'
 zstyle ':z4h:bindkey' keyboard  'pc'
 {{ end }}
 
-{{- if eq .chezmoi.os "linux" }}
-# Start tmux if not already in tmux.
-zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
-{{ end }}
+#{{- if eq .chezmoi.os "linux" }}
+## Start tmux if not already in tmux.
+#zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
+#{{ end }}
 
 # Enable term shell integration
 zstyle ':z4h:' term-shell-integration 'yes'
