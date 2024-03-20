@@ -17,10 +17,10 @@ zstyle ':z4h:bindkey' keyboard  'mac'
 zstyle ':z4h:bindkey' keyboard  'pc'
 {{ end }}
 
-#{{- if eq .chezmoi.os "linux" }}
-## Start tmux if not already in tmux.
+{{- if eq .chezmoi.os "linux" }}
+# Start tmux if not already in tmux.
 #zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
-#{{ end }}
+{{- end }}
 
 # Enable term shell integration
 zstyle ':z4h:' term-shell-integration 'yes'
@@ -84,14 +84,9 @@ z4h install ohmyzsh/ohmyzsh || return                            # Install ohmyz
 z4h install zdharma-continuum/fast-syntax-highlighting || return # Install fast-syntax-highlighting
 
 {{- if eq .chezmoi.os "linux" }}
-# Config for keychain omz plugin
-zstyle :omz:plugins:keychain agents ssh
-zstyle :omz:plugins:keychain options --quiet
-if [ -f "$HOME/.ssh/keys/.loadkeys" ]; then
-  zstyle :omz:plugins:keychain options --quiet
-  zstyle :omz:plugins:keychain identities $HOME/.ssh/keys/*.pem
-else
-  zstyle :omz:plugins:keychain options --inherit any --quiet
+if [[ -e ~/.ssh/keys/.loadkeys ]]; then
+  zstyle ':z4h:ssh-agent:' start      yes
+  zstyle ':z4h:ssh-agent:' extra-args -t 20h
 fi
 {{ end }}
 
@@ -122,8 +117,8 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-{{- if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch")) }}
-export BROWSER="echo"
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }}
+export BROWSER=/usr/bin/wslview # wslview is a part of wslu
 {{- end }}
 
 # Source additional local files if they exist.
@@ -134,9 +129,6 @@ z4h source ${HOME}/.cargo/env
 z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
-{{- if eq .chezmoi.os "linux" }}
-z4h load   ohmyzsh/ohmyzsh/plugins/keychain
-{{ end }}
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
 z4h load   zdharma-continuum/fast-syntax-highlighting
