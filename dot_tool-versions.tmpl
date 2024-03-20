@@ -1,15 +1,15 @@
+{{- if eq .chezmoi.os "darwin" }}
 aws-ssm-tools 1.6.0
-awscli system
+{{- end }}
 kubectl 1.24.17
 krew 0.4.4
-terraform 1.7.4
+terraform 1.7.5
 wtfutil 0.43.0
 dockle 0.4.14
-trivy 0.49.1
+trivy 0.50.0
 packer system
 kubectx 0.9.5
-helm 3.14.2
-k9s 0.32.1
+helm 3.14.3
+k9s 0.32.3
 sops 3.8.1
-
 terraform-docs 0.17.0
