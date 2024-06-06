@@ -110,24 +110,25 @@ export VISUAL=nvim
 export ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
-#if [ -f $(command -v bat) ]; then
-#  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-#fi
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 {{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }}
+export PATH="/opt/google-cloud-cli/bin:$PATH"
 export BROWSER=/usr/bin/wslview # wslview is a part of wslu
 {{- end }}
 
 # Source additional local files if they exist.
+source <(ng completion script)
 z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
 z4h source ${HOMEBREW_PREFIX}/bin/virtualenvwrapper.sh
 z4h source ${HOME}/.cargo/env
 z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }}
+z4h source /usr/share/doc/pkgfile/command-not-found.zsh
+z4h source /usr/share/bash-completion/completions/az
+{{- end }}
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
@@ -178,7 +179,7 @@ else
 fi
 alias ll="${aliases[ls]:-ls} -lh"
 alias la="${aliases[ll]:-ls} -A"
-alias l="${aliases[ll]:-ls}"
+alias l="${aliases[la]:-ls}"
 alias vi="nvim"
 
 #export PYENV_ROOT="$HOME/.pyenv"
@@ -190,3 +191,7 @@ fi
 ## Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
