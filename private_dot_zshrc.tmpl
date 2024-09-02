@@ -175,11 +175,11 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias ls="gls --group-directories-first --color=auto --literal"
 else
   #alias ls="ls --group-directories-first --color=auto --literal"
-  alias ls="eza --group-directories-first --icons"
+  alias ls="eza --group-directories-first --icons=always $@"
 fi
-alias ll="${aliases[ls]:-ls} -lh"
+alias ll="${aliases[ls]:-ls} -lh --git"
 alias la="${aliases[ll]:-ls} -A"
-alias l="${aliases[la]:-ls}"
+alias l="${aliases[ll]:-ls}"
 alias vi="nvim"
 
 #export PYENV_ROOT="$HOME/.pyenv"

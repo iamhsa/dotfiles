@@ -29,6 +29,13 @@ function edit-command-line-inplace() {
   } =(<<<"$BUFFER") </dev/tty
 }
 
+function fix-zsh-history() {
+  mv ~/.zsh_history ~/.zsh_history_bad
+  strings ~/.zsh_history_bad > ~/.zsh_history
+  fc -R ~/.zsh_history
+  rm ~/.zsh_history_bad
+}
+
 {{- if .islastpasspresent }}
 ## enterprise proxy functions
 ## ==============================================================
@@ -111,6 +118,7 @@ function aws-ecr-repo-empty-list () {
     fi
   done
 }
+
 {{- if .islastpasspresent }}
 function aws-start-inf1 () {
   inst-id="$(aws ec2 describe-instances --filters "Name=tag:Name,Values={{ (index (lastpassRaw "inf1_tag_name") 0).note }}" --query 'Reservations[].Instances[].InstanceId' --output text)"
