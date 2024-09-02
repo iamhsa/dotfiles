@@ -5,7 +5,7 @@
 -- Some OS detectors
 local is_wsl = vim.fn.has("wsl") == 1
 
--- WSL Clipboard support
+--  WSL Clipboard support
 if is_wsl then
   -- This is NeoVim's recommended way to solve clipboard sharing if you use WSL
   -- See: https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl
