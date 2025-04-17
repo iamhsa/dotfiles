@@ -36,6 +36,9 @@ function fix-zsh-history() {
   rm ~/.zsh_history_bad
 }
 
+function getWifiSsid() {
+  netsh.exe wlan show interfaces | grep "Profile.*:" | cut -d : -f2 | sed 's/ //g'
+}
 {{- if .islastpasspresent }}
 ## enterprise proxy functions
 ## ==============================================================
@@ -84,26 +87,6 @@ bindkey '^N' toggle-wifi-segment
 zle -N toggle-kubecontext-segment
 bindkey '^K' toggle-kubecontext-segment
 
-## Node functions
-## ==============================================================
-function configureNvm(){
-  export NVM_DIR="$HOME/.nvm"
-  . "/opt/homebrew/opt/nvm/nvm.sh"
-}
-
-## asdf functions
-## ==============================================================
-function updAsdfTools() {
-  for t in "${(@f)"$(<~/.tool-versions)"}"; do
-    pkg="$(echo "${t}" | cut -d ' ' -f1)"
-    if [[ "${t}" == *"system"* || ${pkg} == "kubectl" ]]; then
-      echo "${pkg} is set as system package or pinned (nothing to do)"
-    else
-      asdf install ${pkg} latest && asdf global ${pkg} latest
-    fi
-  done
-}
-
 ## aws functions
 ## ==============================================================
 function aws-ecr-repo-empty-list () {
@@ -124,7 +107,16 @@ function aws-start-inf1 () {
   inst-id="$(aws ec2 describe-instances --filters "Name=tag:Name,Values={{ (index (lastpassRaw "inf1_tag_name") 0).note }}" --query 'Reservations[].Instances[].InstanceId' --output text)"
   aws ec2 start-instances --instance-ids $inst-id
 }
-{{- end }}
+
+function aws-clean-ecr-untagged-images() {
+  aws ecr  describe-repositories \
+    | jq --raw-output '.repositories[] | select(.repositoryName | startswith("docker-hub")) | .repositoryName' \
+    | while read repo; do
+      imageIds=$(aws ecr list-images --repository-name $repo --filter tagStatus=UNTAGGED --query 'imageIds[*]' --output json  | jq -r '[.[].imageDigest] | map("imageDigest="+.) | join (" ")');
+      if [[ "$imageIds" == "" ]]; then continue; fi
+      aws ecr batch-delete-image --repository-name $repo --image-ids $imageIds;
+    done
+}
 
 ## brew functions
 ## ==============================================================
