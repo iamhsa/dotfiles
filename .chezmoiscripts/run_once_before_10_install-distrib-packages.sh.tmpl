@@ -30,7 +30,7 @@ touch ~/.ssh/keys/.loadkeys
 {{- end -}}
 {{- else if (eq .chezmoi.osRelease.id "arch") }}
 sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm --needed git base-devel zsh unzip wget vim openbsd-netcat keychain corkscrew openssh keychain nodejs tmux mise shellcheck bind
+sudo pacman -S --noconfirm --needed git base-devel zsh unzip wget vim openbsd-netcat keychain corkscrew openssh keychain nodejs tmux mise shellcheck bind eza
 {{- else if (eq .chezmoi.osRelease.id "fedora") }}
 sudo dnf -y
 sudo dnf install -y zsh git unzip wget vim curl util-linux-user netcat keychain corkscrew
