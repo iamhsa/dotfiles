@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/sbin/env bash
 {{- if (eq .chezmoi.os "linux") }}
 {{- if (eq .chezmoi.osRelease.id "debian") }}
 sudo bash -c "cat <<EOF > /etc/apt/sources.list.d/unstable.list
@@ -30,7 +30,7 @@ touch ~/.ssh/keys/.loadkeys
 {{- end -}}
 {{- else if (eq .chezmoi.osRelease.id "arch") }}
 sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm zsh git unzip wget vim openbsd-netcat keychain corkscrew openssh keychain nodejs tmux
+sudo pacman -S --noconfirm --needed git base-devel zsh unzip wget vim openbsd-netcat keychain corkscrew openssh keychain nodejs tmux mise shellcheck bind
 {{- else if (eq .chezmoi.osRelease.id "fedora") }}
 sudo dnf -y
 sudo dnf install -y zsh git unzip wget vim curl util-linux-user netcat keychain corkscrew
