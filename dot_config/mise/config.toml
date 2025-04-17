@@ -1,0 +1,20 @@
+[settings]
+paranoid = true
+disable_tools = ['packer']
+legacy_version_file = false
+fetch_remote_versions_timeout = '10'
+
+
+[settings.npm]
+bun = true
+
+[tools]
+bun = "latest"
+checkov = "3.2.403"
+dynatrace-monaco = "latest"
+k9s = "0.40.10"
+krew = "0.4.5"
+kubectl = "1.30.11"
+sops = "latest"
+terraform = "1.11.3"
+tf-summarize = "latest"
