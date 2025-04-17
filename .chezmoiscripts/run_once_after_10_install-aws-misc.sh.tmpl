@@ -17,12 +17,12 @@ curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_${a
 sudo dnf install -y ${destpath}${file}${ext}
   {{- else if (eq .chezmoi.osRelease.id "arch") }}
 git clone https://aur.archlinux.org/yay-bin.git ~/workspace/private/yay-bin
-cd yay-bin
+cd ~/workspace/private/yay-bin
 makepkg -si --noconfirm
 yay -Y --gendb
 yay -Syu --devel
+yay -S --noconfirm aws-cli-v2 aws-session-manager-plugin
 yay -Y --devel --save
-sudo pacman -S --noconfirm aws-cli-v2 sessionmanagerplugin
   {{- end }}
 {{- else }}
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "${destpath}sessionmanager-bundle.zip"

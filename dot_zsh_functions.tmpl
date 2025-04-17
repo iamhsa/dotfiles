@@ -107,6 +107,7 @@ function aws-start-inf1 () {
   inst-id="$(aws ec2 describe-instances --filters "Name=tag:Name,Values={{ (index (lastpassRaw "inf1_tag_name") 0).note }}" --query 'Reservations[].Instances[].InstanceId' --output text)"
   aws ec2 start-instances --instance-ids $inst-id
 }
+{{- end }}
 
 function aws-clean-ecr-untagged-images() {
   aws ecr  describe-repositories \
