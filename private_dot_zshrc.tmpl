@@ -112,20 +112,19 @@ export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
-{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }}
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
 export PATH="/opt/google-cloud-cli/bin:$PATH"
 export BROWSER=/usr/bin/wslview # wslview is a part of wslu
 {{- end }}
 
 # Source additional local files if they exist.
-source <(ng completion script)
 z4h source ~/.zsh_functions
 z4h source ${ASDF_DIR}/asdf.sh
 z4h source ${HOMEBREW_PREFIX}/bin/virtualenvwrapper.sh
 z4h source ${HOME}/.cargo/env
 z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/cli.zsh
-{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }}
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
 z4h source /usr/share/doc/pkgfile/command-not-found.zsh
 z4h source /usr/share/bash-completion/completions/az
 {{- end }}
@@ -191,7 +190,3 @@ fi
 ## Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
-
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
