@@ -20,6 +20,7 @@
   log = delta
   reflog = delta
   show = delta
+  blame = delta
 
 [interactive]
   diffFilter = delta --color-only --features=interactive
@@ -31,6 +32,7 @@
   trustexitcode = false
 
 [delta]
+  hyperlink = true
   side-by-side = true
   commit-decoration-style = bold box ul
   dark = true
@@ -82,5 +84,3 @@
   path = ~/workspace/private/.gitconfig
 [includeIf "gitdir:~/workspace/work/"]
   path = ~/workspace/work/.gitconfig
-
-
