@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# HTTP Proxy
+echo "{{ (index (lastpassRaw "proxy value") 0).note }}"
+#if [[ "$(drill -{{ (index (lastpassRaw "in network addr") 0).note }})" = "10.10.10.10" ]]; then
+#	echo "{{ (index (lastpassRaw "proxy value") 0).note }}"
+#fi
+
+# No Proxy
+echo "localhost,127.0.0.1,{{ (index (lastpassRaw "no proxy value") 0).note }}"
