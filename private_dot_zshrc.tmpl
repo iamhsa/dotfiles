@@ -116,19 +116,21 @@ export PROJECT_HOME=$HOME/workspace
 {{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
 export PATH="/opt/google-cloud-cli/bin:$PATH"
 export BROWSER=/usr/bin/wslview # wslview is a part of wslu
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 {{- end }}
 
 # Source additional local files if they exist.
 z4h source ~/.zsh_functions
+z4h source ${XDG_CONFIG_HOME}/shell/p10k.wifi.zsh
+z4h source ${XDG_CONFIG_HOME}/shell/p10k.mise.zsh
+z4h source ${XDG_CONFIG_HOME}/shell/p10k.lpass.zsh
+z4h source ${XDG_CONFIG_HOME}/shell/p10k.wsl.zsh
 z4h source ${HOMEBREW_PREFIX}/bin/virtualenvwrapper.sh
 z4h source ${HOME}/.cargo/env
 z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source ${Z4H}/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source /usr/share/doc/pkgfile/command-not-found.zsh
 z4h source /usr/share/bash-completion/completions/az
-z4h source ${XDG_CONFIG_HOME}/shell/p10k.wifi.zsh
-z4h source ${XDG_CONFIG_HOME}/shell/p10k.mise.zsh
-z4h source ${XDG_CONFIG_HOME}/shell/p10k.lpass.zsh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
@@ -183,14 +185,6 @@ alias l="${aliases[ll]:-ls}"
 alias vi="nvim"
 alias rot13="tr a-mn-zA-MN-Z n-za-mN-ZA-M"
 
-#export PYENV_ROOT="$HOME/.pyenv"
-#if (command -v pyenv >/dev/null); then
-#  export PATH="$PYENV_ROOT/bin:$PATH" 
-#  eval "$(pyenv init -)"
-#fi
-#
-export COLUMNS="120"
-export PATH="$PATH:/home/hsalesses/ACLI"
 
 if (command -v mise > /dev/null); then
   eval "$(mise activate zsh)"

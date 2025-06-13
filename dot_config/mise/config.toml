@@ -9,12 +9,14 @@ fetch_remote_versions_timeout = '10'
 bun = true
 
 [tools]
+awscli = "latest"
 bun = "latest"
-checkov = "3.2.403"
+checkov = "latest"
 dynatrace-monaco = "latest"
-k9s = "0.40.10"
-krew = "0.4.5"
+k9s = "latest"
+krew = "latest"
 kubectl = "1.30.11"
+kubectx = "latest"
 sops = "latest"
-terraform = "1.11.3"
+terraform = "1.12.2"
 tf-summarize = "latest"
