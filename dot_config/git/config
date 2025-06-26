@@ -1,5 +1,6 @@
 [push]
   default = matching
+	autoSetupRemote = true
 
 [core]
   trustctime = false
