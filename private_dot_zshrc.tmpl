@@ -115,7 +115,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 {{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
 export PATH="/opt/google-cloud-cli/bin:$PATH"
-export BROWSER=/usr/bin/wslview # wslview is a part of wslu
+export BROWSER="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 {{- end }}
 
