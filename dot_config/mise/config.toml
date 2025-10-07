@@ -3,6 +3,7 @@ paranoid = true
 disable_tools = ['packer']
 legacy_version_file = false
 fetch_remote_versions_timeout = '10'
+experimental = true
 
 
 [settings.npm]
@@ -13,10 +14,11 @@ awscli = "latest"
 bun = "latest"
 checkov = "latest"
 dynatrace-monaco = "latest"
+gcloud = "latest"
 k9s = "latest"
 krew = "latest"
-kubectl = "1.30.11"
+kubectl = "1.31.12"
 kubectx = "latest"
 sops = "latest"
-terraform = "1.12.2"
+terraform = "latest"
 tf-summarize = "latest"
