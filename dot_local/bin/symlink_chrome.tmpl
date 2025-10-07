@@ -1,0 +1,3 @@
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
+/mnt/c/Program Files/Google/Chrome/Application/chrome.exe
+{{- end}}
