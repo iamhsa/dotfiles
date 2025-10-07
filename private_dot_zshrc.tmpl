@@ -109,8 +109,10 @@ POSTEDIT=$'\n\n\e[2A'
 export GPG_TTY=$TTY
 export EDITOR=nvim
 export VISUAL=nvim
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
+{{- end }}
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 {{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
@@ -130,8 +132,10 @@ z4h source ${HOME}/.cargo/env
 z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source ${Z4H}/ohmyzsh/ohmyzsh/lib/cli.zsh
 z4h source /usr/share/doc/pkgfile/command-not-found.zsh
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
 z4h source /usr/share/bash-completion/completions/az
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
+{{- end }}
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
 z4h load   zdharma-continuum/fast-syntax-highlighting

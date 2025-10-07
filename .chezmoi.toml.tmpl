@@ -1,6 +1,8 @@
 {{/* boolean feature tags */}}
-{{- $islastpasspresent := output "bash" "-c" "command -v lpass || true" | regexMatch "lpass" -}} {{/* true if lastpass cli is installed */}}
+{{- $islastpasspresent := output "bash" "-c" "command -v lpass || true" | regexMatch "lpass" -}} {{/* true if lastpass-cli is installed */}}
+{{- $isawsclipresent := output "bash" "-c" "command -v aws || true" | regexMatch "aws" -}} {{/* true if aws-cli cli is installed */}}
 {{- "" -}}
 
 [data]
-  islastpasspresent = {{ $islastpasspresent }} 
+  islastpasspresent = {{ $islastpasspresent }}
+  isawsclipresent = {{ $islastpasspresent }}

@@ -110,12 +110,18 @@
     # =========================[ Line #2 ]=========================
     newline
     proxy                   # system-wide http/https/ftp proxy
-    #my_lpass                # lastpass
+    {{- if .islastpasspresent }}
+    my_lpass                # lastpass
+    {{- end }}
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # battery               # internal battery
-    # wifi                  # wifi speed
-    # my_wifi
+    {{- if (eq .chezmoi.os "linux") }}
+      {{- if (.chezmoi.kernel.osrelease | lower | contains "wsl") }}
+    my_wifi
+      {{- end }}
+    wifi                  # wifi speed
+    {{- end }}
     # example               # example user-defined segment (see prompt_example function below)
   )
 

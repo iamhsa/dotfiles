@@ -1,3 +1,3 @@
-{{- if (.islastpasspresent) -}}
+{{- if (and (.isawsclipresent) (.islastpasspresent) ) -}}
 {{ (index (lastpassRaw "awscli-sso-config-new") 0).note }}
 {{- end -}}
