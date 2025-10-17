@@ -109,20 +109,22 @@
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
     # =========================[ Line #2 ]=========================
     newline
-    proxy                   # system-wide http/https/ftp proxy
-    {{- if .islastpasspresent }}
-    my_lpass                # lastpass
-    {{- end }}
+    #proxy                   # system-wide http/https/ftp proxy
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # battery               # internal battery
     {{- if (eq .chezmoi.os "linux") }}
       {{- if (.chezmoi.kernel.osrelease | lower | contains "wsl") }}
     my_wifi
+    proxy                   # system-wide http/https/ftp proxy
       {{- else }}
     wifi                  # wifi speed
       {{- end }}
     {{- end }}
+    {{- if .islastpasspresent }}
+    my_lpass                # lastpass
+    {{- end }}
+
     # example               # example user-defined segment (see prompt_example function below)
   )
 

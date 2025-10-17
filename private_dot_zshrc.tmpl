@@ -139,6 +139,7 @@ z4h source /usr/share/doc/pkgfile/command-not-found.zsh
 z4h source /usr/share/bash-completion/completions/az
 z4h source /home/hsalesses/.oks_cli/completions/oks-cli.sh
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
+z4h load   ohmyzsh/ohmyzsh/plugins/azure
 {{- end }}
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
@@ -193,6 +194,9 @@ alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
 alias vi="nvim"
 alias rot13="tr a-mn-zA-MN-Z n-za-mN-ZA-M"
+if (command -v oks-cli > /dev/null); then
+  alias oks="oks-cli"
+fi
 
 
 if (command -v mise > /dev/null); then

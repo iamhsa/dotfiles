@@ -10,6 +10,7 @@ experimental = true
 bun = true
 
 [tools]
+argocd = "latest"
 awscli = "latest"
 bun = "latest"
 checkov = "latest"
@@ -22,3 +23,5 @@ kubectx = "latest"
 sops = "latest"
 terraform = "latest"
 tf-summarize = "latest"
+#"pipx:osc-sdk" = {version = "latest"}
+"pipx:oks-cli" = {version = "latest"}
