@@ -115,8 +115,8 @@
     # battery               # internal battery
     {{- if (eq .chezmoi.os "linux") }}
       {{- if (.chezmoi.kernel.osrelease | lower | contains "wsl") }}
-    my_wifi
-    proxy                   # system-wide http/https/ftp proxy
+    # my_wifi
+    # proxy                   # system-wide http/https/ftp proxy
       {{- else }}
     wifi                  # wifi speed
       {{- end }}

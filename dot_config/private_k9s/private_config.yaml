@@ -31,7 +31,6 @@ k9s:
     sinceSeconds: -1
     textWrap: false
     showTime: false
-    fullscreen: true
   thresholds:
     cpu:
       critical: 90

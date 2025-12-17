@@ -1,17 +1,19 @@
 return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
+    branch = "main",
     dependencies = {
-      -- { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "github/copilot.vim" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+      { "github/copilot.vim" },
+      { "nvim-lua/plenary.nvim" },
     },
-    build = "make tiktoken", -- Only on MacOS or Linux
+    build = "make tiktoken",
     opts = {
-      debug = true, -- Enable debugging
-      -- See Configuration section for rest
+      debug = false,
+      model = "claude-sonnet-4.5",
+      window = {
+        layout = "vertical",
+        width = 0.4,
+      },
     },
-    -- See Commands section for default commands if you want to lazy load on them
   },
 }
