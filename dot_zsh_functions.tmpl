@@ -35,18 +35,21 @@ function fix-zsh-history() {
   fc -R ~/.zsh_history
   rm ~/.zsh_history_bad
 }
-
-function getWifiSsid() {
-  netsh.exe wlan show interfaces | grep "Profile.*:" | cut -d : -f2 | sed 's/ //g'
-}
-{{- if .islastpasspresent }}
-## enterprise proxy functions
+{{- if (.chezmoi.kernel.osrelease | lower | contains "wsl") }}
+## enterprise functions
 ## ==============================================================
+  {{- if .islastpasspresent }}
 function add-proxy(){
   export  SHELLPROXY_URL="{{ (index (lastpassRaw "proxy value") 0).note }}"
 }
-{{- end }}
+  {{- end }}
 
+function getWifiSsid() {
+  #netsh.exe wlan show interfaces | grep "Profil.*:" | cut -d : -f2 | sed 's/ //g'
+  powershell.exe -ExecutionPolicy Bypass -File 'C:\Get-WiFiSSID.ps1'
+}
+
+{{- end }}
 ## p10k functions
 ## ==============================================================
 function toggle-kubecontext-segment() {
@@ -110,7 +113,7 @@ function aws-start-inf1 () {
 {{- end }}
 
 function aws-clean-ecr-untagged-images() {
-  aws ecr  describe-repositories \
+  aws ecr describe-repositories \
     | jq --raw-output '.repositories[] | select(.repositoryName | startswith("docker-hub")) | .repositoryName' \
     | while read repo; do
       imageIds=$(aws ecr list-images --repository-name $repo --filter tagStatus=UNTAGGED --query 'imageIds[*]' --output json  | jq -r '[.[].imageDigest] | map("imageDigest="+.) | join (" ")');
@@ -119,6 +122,31 @@ function aws-clean-ecr-untagged-images() {
     done
 }
 
+{{- if .islastpasspresent }}
+function aws-creds(){
+  if ! aws sts get-caller-identity --output text 2>/dev/null; then
+    asp ${1} login
+  fi
+  # Export codeartifact auth token for tools
+  export AWS_CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token --domain development --domain-owner {{ (index (lastpassRaw "svc-catalog-account") 0).note }} --region {{ (index (lastpassRaw "svc-catalog-region") 0).note }} --query authorizationToken --output text)"
+  # Get pip config for codeartifact
+  aws codeartifact login \
+  --tool pip \
+  --repository pypi-private \
+  --domain development \
+  --domain-owner {{ (index (lastpassRaw "svc-catalog-account") 0).note }} \
+  --region {{ (index (lastpassRaw "svc-catalog-region") 0).note }}
+  # Get npm config for codeartifact
+  aws codeartifact login \
+  --tool npm \
+  --repository npm-private \
+  --domain development \
+  --domain-owner {{ (index (lastpassRaw "svc-catalog-account") 0).note }} \
+  --region {{ (index (lastpassRaw "svc-catalog-region") 0).note }}
+  # Get credential for podman to pull/push from ECR
+  aws ecr get-login-password --region {{ (index (lastpassRaw "svc-catalog-region") 0).note }} | podman login --username AWS --password-stdin {{ (index (lastpassRaw "svc-catalog-account") 0).note }}.dkr.ecr.{{ (index (lastpassRaw "svc-catalog-region") 0).note }}.amazonaws.com
+}
+{{- end }}
 ## brew functions
 ## ==============================================================
 function brew_find_pkg {

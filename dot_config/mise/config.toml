@@ -18,15 +18,16 @@ dynatrace-monaco = "latest"
 gcloud = "latest"
 k9s = "latest"
 krew = "latest"
-kubectl = "1.32"
+kubectl = "1.33"
 kubectx = "latest"
 sops = "latest"
 terraform = "latest"
 tf-summarize = "latest"
 #"pipx:osc-sdk" = {version = "latest"}
 "pipx:oks-cli" = {version = "latest"}
+"pipx:git-plus" = {version = "latest"}
 "npm:ajv-cli" = "latest"
 "cargo:boon-cli" = "latest"
 "cargo:tuifeed" = "latest"
 hadolint = "latest"
-trivy = "latest"
+pre-commit = "latest"

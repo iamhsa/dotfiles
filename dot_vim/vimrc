@@ -37,9 +37,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'airblade/vim-gitgutter'
-  Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
+  "Plug 'pearofducks/ansible-vim', { 'do': './UltiSnips/generate.sh' }
   Plug 'yaegassy/coc-ansible', {'do': 'yarn install --frozen-lockfile'}
   Plug 'rust-lang/rust.vim'
+  Plug 'chrisbra/Recover.vim'
 
 " Initialize plugin system
 call plug#end()
