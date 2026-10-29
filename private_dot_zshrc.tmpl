@@ -114,10 +114,8 @@ export XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
 export GPG_TTY=$TTY
 export EDITOR=nvim
 export VISUAL=nvim
-{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
-{{- end }}
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
 {{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
@@ -141,17 +139,12 @@ z4h source ${XDG_CONFIG_HOME}/shell/p10k.wifi.zsh
 z4h source ${XDG_CONFIG_HOME}/shell/p10k.mise.zsh
 z4h source ${XDG_CONFIG_HOME}/shell/p10k.lpass.zsh
 z4h source ${XDG_CONFIG_HOME}/shell/p10k.wsl.zsh
-z4h source ${HOMEBREW_PREFIX}/bin/virtualenvwrapper.sh
 z4h source ${HOME}/.cargo/env
-z4h source ${HOMEBREW_PREFIX}/opt/nvm/nvm.sh
 z4h source ${Z4H}/ohmyzsh/ohmyzsh/lib/cli.zsh
-{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "wsl")) }}
-z4h source /usr/share/bash-completion/completions/az
 z4h source ${HOME}/.oks_cli/completions/oks-cli.sh
 z4h source ${HOME}/.local/share/mise/installs/gcloud/latest/completion.zsh.inc
 z4h load   ohmyzsh/ohmyzsh/plugins/aws
 z4h load   ohmyzsh/ohmyzsh/plugins/azure
-{{- end }}
 z4h load   ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load   ohmyzsh/ohmyzsh/plugins/shell-proxy
 z4h load   ohmyzsh/ohmyzsh/plugins/terraform
@@ -193,18 +186,15 @@ alias tree='tree -a -I .git'
 alias diff='diff --color'
 
 # Add flags to existing aliases.
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  alias rm="grm"
-  alias ls="gls --group-directories-first --color=auto --literal"
-else
-  #alias ls="ls --group-directories-first --color=auto --literal"
-  alias ls="eza --group-directories-first --icons=always $@"
+if (command -v eza > /dev/null); then
+  alias ls="eza --group-directories-first --git --icons=always $@"
 fi
-alias ll="${aliases[ls]:-ls} -lh --git"
+alias ll="${aliases[ls]:-ls} -lh"
 alias la="${aliases[ll]:-ls} -A"
 alias l="${aliases[ll]:-ls}"
 alias vi="nvim"
 alias rot13="tr a-mn-zA-MN-Z n-za-mN-ZA-M"
+alias vimdiff="nvim -d"
 if (command -v oks-cli > /dev/null); then
   alias oks="oks-cli"
 fi

@@ -1,33 +1,41 @@
 [settings]
 paranoid = true
-disable_tools = ['packer']
-legacy_version_file = false
-fetch_remote_versions_timeout = '10'
+disable_tools = ["packer"]
+fetch_remote_versions_timeout = "10"
 experimental = true
 
-
 [settings.npm]
-bun = true
+package_manager = "auto"
 
 [tools]
 argocd = "latest"
-awscli = "latest"
-bun = "latest"
-checkov = "latest"
 dynatrace-monaco = "latest"
 gcloud = "latest"
 k9s = "latest"
 krew = "latest"
-kubectl = "1.33"
+kubectl = "1.35"
 kubectx = "latest"
 sops = "latest"
 terraform = "latest"
 tf-summarize = "latest"
-#"pipx:osc-sdk" = {version = "latest"}
-"pipx:oks-cli" = {version = "latest"}
-"pipx:git-plus" = {version = "latest"}
+helm = "latest"
+helmfile = "latest"
+"pipx:oks-cli" = { version = "latest" }
+"pipx:git-plus" = { version = "latest" }
 "npm:ajv-cli" = "latest"
 "cargo:boon-cli" = "latest"
 "cargo:tuifeed" = "latest"
 hadolint = "latest"
 pre-commit = "latest"
+yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
+terraform-docs = "latest"
+grype = "latest"
+uv = "0.12.10"
+glow = "latest"
+shellcheck = "latest"
+fx = "latest"
+trivy = "0.74.0"
+terraform-lsp = "0.0.12"
+checkov = "latest"
+ansible-core = "latest"
+"aqua:aws/session-manager-plugin" = "latest"

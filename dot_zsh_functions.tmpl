@@ -35,21 +35,7 @@ function fix-zsh-history() {
   fc -R ~/.zsh_history
   rm ~/.zsh_history_bad
 }
-{{- if (.chezmoi.kernel.osrelease | lower | contains "wsl") }}
-## enterprise functions
-## ==============================================================
-  {{- if .islastpasspresent }}
-function add-proxy(){
-  export  SHELLPROXY_URL="{{ (index (lastpassRaw "proxy value") 0).note }}"
-}
-  {{- end }}
 
-function getWifiSsid() {
-  #netsh.exe wlan show interfaces | grep "Profil.*:" | cut -d : -f2 | sed 's/ //g'
-  powershell.exe -ExecutionPolicy Bypass -File 'C:\Get-WiFiSSID.ps1'
-}
-
-{{- end }}
 ## p10k functions
 ## ==============================================================
 function toggle-kubecontext-segment() {

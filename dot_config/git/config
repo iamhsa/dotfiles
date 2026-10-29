@@ -6,6 +6,7 @@
   trustctime = false
   editor = vim
   filemode = false
+	excludesfile = /Users/hugo.salesses/.config/gitignore
 
 [color]
   ui = always

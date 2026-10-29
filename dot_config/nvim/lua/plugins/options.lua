@@ -6,6 +6,7 @@ vim.filetype.add({
   },
   pattern = {
     [".*.yaml.dec"] = "yaml",
+    [".*.tfvars"] = "tf",
   },
 })
 
